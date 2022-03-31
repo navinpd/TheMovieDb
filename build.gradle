@@ -5,6 +5,16 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
 }
 
+ext {
+    compileSdkVersion = 31
+    minSdkVersion = 23
+    targetSdkVersion = 31
+    versionCodeVersion = 1
+    versionNameVersion = "1.0"
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply from: 'versions.gradle'
