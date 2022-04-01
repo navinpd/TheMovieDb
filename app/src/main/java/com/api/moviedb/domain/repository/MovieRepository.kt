@@ -13,35 +13,28 @@ interface MovieRepository {
 
     fun searchMovies(
         query: String, pageNumber: Int,
-        apiKey: String
     ): Observable<SearchedMovies>
 
     fun getMovieDetails(
         id: Int,
-        apiKey: String
     ): Observable<MovieDetail>
 
     fun getNowPlayingMovie(
         pageNumber: Int,
-        apiKey: String
     ): Observable<NowPlaying>
 
     fun getPopularMovies(
         pageNumber: Int,
-        apiKey: String
     ): Observable<PopularMovie>
 
     fun getTopRatedMovies(
         pageNumber: Int,
-        apiKey: String
     ): Observable<TopRatedMovies>
 
     fun getUpcomingMovies(
         pageNumber: Int,
-        apiKey: String
     ): Observable<UpcomingMovies>
 
     fun getGenreDetails(
-        apiKey: String
     ): Observable<GeneresResponse>
 }

@@ -18,39 +18,35 @@ class MovieRepositoryImpl @Inject constructor(
     override fun searchMovies(
         query: String,
         pageNumber: Int,
-        apiKey: String
     ): Observable<SearchedMovies> =
-        movieApi.searchMovies(query = query, apiKey = apiKey, page = pageNumber)
+        movieApi.searchMovies(query = query, page = pageNumber)
 
     override fun getMovieDetails(
-        id: Int,
-        apiKey: String
+        id: Int
     ): Observable<MovieDetail> =
-        movieApi.getMovieDetails(movieId = id, apiKey = apiKey)
+        movieApi.getMovieDetails(movieId = id)
 
     override fun getNowPlayingMovie(
         pageNumber: Int,
-        apiKey: String
     ): Observable<NowPlaying> =
-        movieApi.getNowPlaying(page = pageNumber, apiKey = apiKey)
+        movieApi.getNowPlaying(page = pageNumber)
 
     override fun getPopularMovies(
-        pageNumber: Int, apiKey: String
+        pageNumber: Int
     ): Observable<PopularMovie> =
-        movieApi.getPopularMovie(page = pageNumber, apiKey = apiKey)
+        movieApi.getPopularMovie(page = pageNumber)
 
     override fun getTopRatedMovies(
-        pageNumber: Int, apiKey: String
+        pageNumber: Int
     ): Observable<TopRatedMovies> =
-        movieApi.getTopRatedMovies(page = pageNumber, apiKey = apiKey)
+        movieApi.getTopRatedMovies(page = pageNumber)
 
     override fun getUpcomingMovies(
-        pageNumber: Int, apiKey: String
+        pageNumber: Int
     ): Observable<UpcomingMovies> =
-        movieApi.getUpcomingMovies(page = pageNumber, apiKey = apiKey)
+        movieApi.getUpcomingMovies(page = pageNumber)
 
     override fun getGenreDetails(
-        apiKey: String
     ): Observable<GeneresResponse> =
-        movieApi.getGenre(apiKey = apiKey)
+        movieApi.getGenre()
 }

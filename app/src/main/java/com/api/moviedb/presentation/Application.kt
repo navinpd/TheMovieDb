@@ -1,7 +1,7 @@
 package com.api.moviedb.presentation
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-
-class Application : Application() {
-}
+@HiltAndroidApp
+class Application : Application()

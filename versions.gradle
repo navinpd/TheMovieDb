@@ -15,12 +15,14 @@ ext {
     rxJavaVersion = '2.2.10'
     rxbinding3Version = '3.1.0'
     retrofitVersion = '2.9.0'
+    retrofitLoggingInterceptor = '4.9.0'
     androidxLifecycle = '2.2.0'
 
     hiltVersion = '2.40'
-//    daggerVersion = '2.35.1'
-//    daggerSupportVersion = '2.28.1'
-//
+
+    activityKtx = '1.4.0'
+    fragmentKtx = '1.4.1'
+
 //    mockitoCoreVersion = '3.7.7'
 //    mockitoInlineVersion = '3.10.0'
 //    mockitoKotlinVersion = '3.2.0'

@@ -48,6 +48,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$androidxVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$androidxVersion"
     implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "androidx.activity:activity-ktx:$activityKtx"
+    implementation "androidx.fragment:fragment-ktx:$fragmentKtx"
 
     //Rx
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
@@ -62,6 +64,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$retrofitLoggingInterceptor"
 
     // hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"
