@@ -79,5 +79,4 @@ sealed class ViewMovieState {
     object ShowLoading : ViewMovieState()
     object HideLoading : ViewMovieState()
     object ShowError : ViewMovieState()
-    object HideError : ViewMovieState()
 }

@@ -14,11 +14,14 @@ ext {
     rxAndroidVersion = '2.1.1'
     rxJavaVersion = '2.2.10'
     rxbinding3Version = '3.1.0'
+    rxRoom = '1.1.1'
     retrofitVersion = '2.9.0'
     retrofitLoggingInterceptor = '4.9.0'
     androidxLifecycle = '2.2.0'
 
     hiltVersion = '2.40'
+
+    roomDb = '2.4.2'
 
     activityKtx = '1.4.0'
     fragmentKtx = '1.4.1'

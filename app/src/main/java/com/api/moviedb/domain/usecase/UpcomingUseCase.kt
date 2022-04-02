@@ -14,7 +14,7 @@ class UpcomingUseCase @Inject constructor(val repository: MovieRepository) :
         checkNotNull(params) { "Upcoming data query object can not be null" }
 
         return repository
-            .getUpcomingMovies(params.pageNumber)
+            .getUpcomingMovies(pageNumber = params.pageNumber)
             .subscribeOn(Schedulers.io())
     }
 }

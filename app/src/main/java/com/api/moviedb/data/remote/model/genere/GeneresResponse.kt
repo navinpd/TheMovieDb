@@ -8,5 +8,4 @@ data class GeneresResponse(
     @SerializedName("genres")
     var genres: ArrayList<Genres> = arrayListOf()
 
-
 )

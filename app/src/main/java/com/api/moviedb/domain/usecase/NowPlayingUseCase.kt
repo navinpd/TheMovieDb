@@ -8,8 +8,8 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class NowPlayingUseCase
-@Inject constructor(private val movieRepository: MovieRepository) :
+class NowPlayingUseCase @Inject constructor
+    (private val movieRepository: MovieRepository) :
     RxUseCase<ModelData, NowPlaying> {
 
     override fun run(params: ModelData?): Observable<NowPlaying> {

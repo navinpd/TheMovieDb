@@ -37,4 +37,10 @@ interface MovieRepository {
 
     fun getGenreDetails(
     ): Observable<GeneresResponse>
+
+    fun getFavMovies() : Observable<ArrayList<MovieDetail>>
+
+    fun storeFavMovies(md: MovieDetail)
+
+    fun deleteFavMovie(movieId: Int)
 }

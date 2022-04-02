@@ -3,6 +3,7 @@
     package="com.api.moviedb">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".presentation.Application"
@@ -14,8 +15,7 @@
         android:theme="@style/Theme.MovieDb">
         <activity
             android:name=".presentation.ui.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
