@@ -1,10 +1,10 @@
-package com.api.moviedb.data.local.dao
+package com.api.moviedb.data.local.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.api.moviedb.data.local.entity.movieDetails.MovieDetailEntity
+import com.api.moviedb.data.local.model.movieDetails.MovieDetailEntity
 import io.reactivex.Observable
 
 @Dao

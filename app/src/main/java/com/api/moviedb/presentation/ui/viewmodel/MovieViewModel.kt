@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
-import com.api.moviedb.domain.model.MovieDetailsData
+import com.api.moviedb.domain.model.MovieIdData
 import com.api.moviedb.domain.usecase.MainUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -25,7 +25,7 @@ class MovieViewModel @Inject constructor(
 
     fun getMovieDetails(movieId: Int) {
         mainUseCase.movieDetailUseCase
-            .run(MovieDetailsData(movieId))
+            .run(MovieIdData(movieId))
             .subscribeOn(Schedulers.io())
             .doOnSubscribe { showLoading() }
             .observeOn(AndroidSchedulers.mainThread())

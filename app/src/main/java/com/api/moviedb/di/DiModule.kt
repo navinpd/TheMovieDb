@@ -1,20 +1,14 @@
 package com.api.moviedb.di
 
-import android.content.Context
-import androidx.room.Room
 import com.api.moviedb.BuildConfig
-import com.api.moviedb.data.local.dao.MovieDetailsDao
-import com.api.moviedb.data.local.db.MovieDatabase
+import com.api.moviedb.data.local.db.dao.MovieDetailsDao
 import com.api.moviedb.data.remote.api.MovieApi
 import com.api.moviedb.data.repository.MovieRepositoryImpl
 import com.api.moviedb.domain.repository.MovieRepository
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

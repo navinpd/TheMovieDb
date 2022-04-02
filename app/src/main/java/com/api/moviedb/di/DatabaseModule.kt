@@ -2,7 +2,7 @@ package com.api.moviedb.di
 
 import android.content.Context
 import androidx.room.Room
-import com.api.moviedb.data.local.dao.MovieDetailsDao
+import com.api.moviedb.data.local.db.dao.MovieDetailsDao
 import com.api.moviedb.data.local.db.MovieDatabase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -26,7 +26,7 @@ class DatabaseModule {
         return Room.databaseBuilder(
             appContext,
             MovieDatabase::class.java,
-            "RssReader"
+            "MyDatabase"
         )
             .build().apply {
                 MovieDatabase.gson = gson

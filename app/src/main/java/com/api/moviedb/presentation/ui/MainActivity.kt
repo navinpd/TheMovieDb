@@ -1,7 +1,6 @@
 package com.api.moviedb.presentation.ui
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,13 +8,18 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.api.moviedb.R
 import com.api.moviedb.databinding.ActivityMainBinding
+import com.api.moviedb.presentation.ui.viewmodel.MovieViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-//    private val viewMode : MovieViewModel by activityViewModels()
+
+    @Inject
+    lateinit var viewModel: MovieViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

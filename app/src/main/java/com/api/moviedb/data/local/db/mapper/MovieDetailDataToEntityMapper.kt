@@ -1,7 +1,7 @@
-package com.api.moviedb.data.local.mapper
+package com.api.moviedb.data.local.db.mapper
 
 import com.api.common.Mapper
-import com.api.moviedb.data.local.entity.movieDetails.MovieDetailEntity
+import com.api.moviedb.data.local.model.movieDetails.MovieDetailEntity
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
 import javax.inject.Inject
 

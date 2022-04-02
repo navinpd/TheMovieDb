@@ -1,17 +1,12 @@
-package com.api.moviedb.data.local.typerConvertor
+package com.api.moviedb.data.local.db.typerConvertor
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.api.moviedb.data.local.db.MovieDatabase
-import com.api.moviedb.data.local.entity.movieDetails.GenreData
-import com.api.moviedb.data.remote.model.genere.Genres
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import com.api.moviedb.data.local.model.movieDetails.GenreData
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
-import javax.inject.Inject
 
-@ProvidedTypeConverter
 class GenreTypeConvertor {
     private val genreType: Type = object : TypeToken<ArrayList<GenreData>>() {}.type
 

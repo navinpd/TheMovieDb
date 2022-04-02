@@ -9,5 +9,7 @@ class MainUseCase @Inject constructor(
     val searchMovieUseCase: SearchMovieUseCase,
     val popularUseCase: PopularUseCase,
     val topRatedUseCase: TopRatedUseCase,
-    val upcomingUseCase: UpcomingUseCase
+    val upcomingUseCase: UpcomingUseCase,
+    val favMovieDelete : FavMovieDelete,
+
 )

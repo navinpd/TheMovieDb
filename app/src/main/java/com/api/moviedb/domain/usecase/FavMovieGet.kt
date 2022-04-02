@@ -4,8 +4,9 @@ import com.api.common.RxUseCase
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
 import com.api.moviedb.domain.repository.MovieRepository
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class FavMovieGet(private val movieRepository: MovieRepository) :
+class FavMovieGet @Inject constructor(private val movieRepository: MovieRepository) :
     RxUseCase<Int, ArrayList<MovieDetail>> {
 
     override fun run(params: Int?): Observable<ArrayList<MovieDetail>> {

@@ -1,4 +1,4 @@
-package com.api.moviedb.data.local.entity.movieDetails
+package com.api.moviedb.data.local.model.movieDetails
 
 data class ProductionCountriesData(
     var iso31661: String,

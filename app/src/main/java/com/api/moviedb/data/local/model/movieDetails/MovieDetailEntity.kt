@@ -1,4 +1,4 @@
-package com.api.moviedb.data.local.entity.movieDetails
+package com.api.moviedb.data.local.model.movieDetails
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

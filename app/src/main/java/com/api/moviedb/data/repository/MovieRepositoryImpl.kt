@@ -1,7 +1,7 @@
 package com.api.moviedb.data.repository
 
-import com.api.moviedb.data.local.dao.MovieDetailsDao
-import com.api.moviedb.data.local.mapper.*
+import com.api.moviedb.data.local.db.dao.MovieDetailsDao
+import com.api.moviedb.data.local.db.mapper.*
 import com.api.moviedb.data.remote.api.MovieApi
 import com.api.moviedb.data.remote.model.genere.GeneresResponse
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail

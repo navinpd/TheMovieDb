@@ -1,5 +1,5 @@
 package com.api.moviedb.domain.model
 
-data class MovieDetailsData(
+data class MovieIdData(
     val movieId: Int
 )
