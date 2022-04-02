@@ -1,4 +1,4 @@
-package com.api.moviedb.data.mapper
+package com.api.moviedb.data.local.mapper
 
 import com.api.common.Mapper
 import com.api.moviedb.data.local.entity.movieDetails.ProductionCompaniesData

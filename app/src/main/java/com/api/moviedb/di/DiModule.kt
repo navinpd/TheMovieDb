@@ -8,6 +8,8 @@ import com.api.moviedb.data.local.db.MovieDatabase
 import com.api.moviedb.data.remote.api.MovieApi
 import com.api.moviedb.data.repository.MovieRepositoryImpl
 import com.api.moviedb.domain.repository.MovieRepository
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -66,18 +68,5 @@ class DiModule {
         )
     }
 
-    @Provides
-    fun provideAppDatabase(@ApplicationContext appContext: Context): MovieDatabase {
-        return Room.databaseBuilder(
-            appContext,
-            MovieDatabase::class.java,
-            "movie_database.db"
-        ).build()
-    }
-
-    @Provides
-    fun provideChannelDao(appDatabase: MovieDatabase): MovieDetailsDao {
-        return appDatabase.movieDao()
-    }
 
 }

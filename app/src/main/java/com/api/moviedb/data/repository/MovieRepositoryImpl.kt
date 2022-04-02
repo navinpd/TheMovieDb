@@ -1,8 +1,7 @@
 package com.api.moviedb.data.repository
 
 import com.api.moviedb.data.local.dao.MovieDetailsDao
-import com.api.moviedb.data.local.entity.movieDetails.MovieDetailEntity
-import com.api.moviedb.data.mapper.*
+import com.api.moviedb.data.local.mapper.*
 import com.api.moviedb.data.remote.api.MovieApi
 import com.api.moviedb.data.remote.model.genere.GeneresResponse
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
@@ -62,7 +61,8 @@ class MovieRepositoryImpl @Inject constructor(
         movieApi.getGenre()
 
     override fun getFavMovies(): Observable<ArrayList<MovieDetail>> {
-        val movieDetail = movieDetailEntityToDataMapper.map(dbApi.getAllLikedMovies().blockingLast())
+        val movieDetail = movieDetailEntityToDataMapper
+            .map(dbApi.getAllLikedMovies().blockingLast())
         return Observable.just(movieDetail)
     }
 
