@@ -1,0 +1,12 @@
+package com.api.moviedb.presentation.ui.searchresult
+
+import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class SearchResultMovieFragment : Fragment() {
+
+
+
+
+}

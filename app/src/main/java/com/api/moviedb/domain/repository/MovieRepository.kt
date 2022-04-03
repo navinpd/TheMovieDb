@@ -2,7 +2,7 @@ package com.api.moviedb.domain.repository
 
 import com.api.moviedb.data.remote.model.genere.GeneresResponse
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
-import com.api.moviedb.data.remote.model.nowplaying.NowPlaying
+import com.api.moviedb.data.remote.model.nowplaying.NowPlayingMovies
 import com.api.moviedb.data.remote.model.popular.PopularMovie
 import com.api.moviedb.data.remote.model.searchmovie.SearchedMovies
 import com.api.moviedb.data.remote.model.toprated.TopRatedMovies
@@ -21,7 +21,7 @@ interface MovieRepository {
 
     fun getNowPlayingMovie(
         pageNumber: Int,
-    ): Observable<NowPlaying>
+    ): Observable<NowPlayingMovies>
 
     fun getPopularMovies(
         pageNumber: Int,

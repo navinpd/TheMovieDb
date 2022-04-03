@@ -22,7 +22,6 @@ class MovieViewModel @Inject constructor(
     val loadingState: LiveData<ViewMovieState>
         get() = loadingMutableState
 
-
     fun getMovieDetails(movieId: Int) {
         mainUseCase.movieDetailUseCase
             .run(MovieIdData(movieId))
@@ -36,11 +35,11 @@ class MovieViewModel @Inject constructor(
             ).disposedBy(compositeDisposable)
     }
 
-    private fun showLoading() {
+    override fun showLoading() {
         loadingMutableState.postValue(ViewMovieState.ShowLoading)
     }
 
-    private fun hideLoading() {
+    override fun hideLoading() {
         loadingMutableState.postValue(ViewMovieState.HideLoading)
     }
 
@@ -51,32 +50,4 @@ class MovieViewModel @Inject constructor(
     private fun onMovieFetchFailed(throwable: Throwable) {
         loadingMutableState.postValue(ViewMovieState.ShowError)
     }
-
-    fun getTopRatedMovies() {
-
-    }
-
-    fun getUpcomingMovies() {
-
-    }
-
-    fun getPopularMovies() {
-
-    }
-
-    fun getNowPlayingMovies() {
-
-    }
-
-    fun getSearchResultMovies() {
-
-    }
-
-}
-
-
-sealed class ViewMovieState {
-    object ShowLoading : ViewMovieState()
-    object HideLoading : ViewMovieState()
-    object ShowError : ViewMovieState()
 }

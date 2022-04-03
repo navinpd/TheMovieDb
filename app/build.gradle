@@ -72,18 +72,25 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-//    implementation "android.arch.persistence.room:rxjava2:$rxRoom"
-    implementation "androidx.room:room-rxjava2:2.4.2"
     implementation "com.squareup.okhttp3:logging-interceptor:$retrofitLoggingInterceptor"
 
+    implementation "androidx.room:room-rxjava2:$roomDb"
     implementation "androidx.room:room-runtime:$roomDb"
     kapt "androidx.room:room-compiler:$roomDb"
+
+    //glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
 
     // hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
+    testImplementation "org.mockito:mockito-core:$mockitoCoreVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoInlineVersion"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion"
+    testImplementation "android.arch.core:core-testing:$coreTest"
     testImplementation "junit:junit:$jUnitVersion"
+
     androidTestImplementation "androidx.test.ext:junit:$androidxJUnitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
 }

@@ -12,4 +12,14 @@ abstract class BaseViewModel : ViewModel() {
         compositeDisposable.clear()
         super.onCleared()
     }
+
+    abstract fun showLoading()
+
+    abstract fun hideLoading()
+}
+
+sealed class ViewMovieState {
+    object ShowLoading : ViewMovieState()
+    object HideLoading : ViewMovieState()
+    object ShowError : ViewMovieState()
 }

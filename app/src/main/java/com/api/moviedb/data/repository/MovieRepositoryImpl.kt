@@ -5,7 +5,7 @@ import com.api.moviedb.data.local.db.mapper.*
 import com.api.moviedb.data.remote.api.MovieApi
 import com.api.moviedb.data.remote.model.genere.GeneresResponse
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
-import com.api.moviedb.data.remote.model.nowplaying.NowPlaying
+import com.api.moviedb.data.remote.model.nowplaying.NowPlayingMovies
 import com.api.moviedb.data.remote.model.popular.PopularMovie
 import com.api.moviedb.data.remote.model.searchmovie.SearchedMovies
 import com.api.moviedb.data.remote.model.toprated.TopRatedMovies
@@ -38,7 +38,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun getNowPlayingMovie(
         pageNumber: Int,
-    ): Observable<NowPlaying> =
+    ): Observable<NowPlayingMovies> =
         movieApi.getNowPlaying(page = pageNumber)
 
     override fun getPopularMovies(

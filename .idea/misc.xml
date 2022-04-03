@@ -3,10 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1275" />
         <entry key="app/src/main/res/drawable/ic_baseline_bookmarks_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_downloading_24.xml" value="0.1275" />
+        <entry key="app/src/main/res/drawable/ic_baseline_error_outline_24.xml" value="0.1275" />
+        <entry key="app/src/main/res/drawable/ic_baseline_file_download_off_24.xml" value="0.14" />
+        <entry key="app/src/main/res/drawable/ic_baseline_vertical_align_top_24.xml" value="0.1275" />
+        <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1275" />
+        <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.1275" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1275" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14488348530901723" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.14488348530901723" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.14488348530901723" />
+        <entry key="app/src/main/res/layout/fragment_search_result.xml" value="0.14488348530901723" />
+        <entry key="app/src/main/res/layout/movie_view_adapter.xml" value="0.14488348530901723" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.16944444444444445" />
       </map>
     </option>
   </component>

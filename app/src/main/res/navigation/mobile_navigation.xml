@@ -3,23 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_now_playing">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.api.moviedb.presentation.ui.now_playing.HomeFragment"
-        android:label="@string/title_home"
+        android:id="@+id/navigation_now_playing"
+        android:name="com.api.moviedb.presentation.ui.nowplaying.NowPlayingFragment"
+        android:label="@string/now_playing"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.api.moviedb.presentation.ui.popular.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:id="@+id/navigation_popular"
+        android:name="com.api.moviedb.presentation.ui.popular.PopularMovieFragment"
+        android:label="@string/popular"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.api.moviedb.presentation.ui.top_rated.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:id="@+id/navigation_top_rated"
+        android:name="com.api.moviedb.presentation.ui.toprated.TopRatedMovieFragment"
+        android:label="@string/top_rated"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_upcoming"
+        android:name="com.api.moviedb.presentation.ui.upcoming.UpcomingMovieFragment"
+        android:label="@string/upcoming"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

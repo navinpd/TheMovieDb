@@ -13,7 +13,7 @@ import com.api.moviedb.data.remote.EndPoints.TOP_RATED_URL
 import com.api.moviedb.data.remote.EndPoints.UPCOMING_MOVIES_URL
 import com.api.moviedb.data.remote.model.genere.GeneresResponse
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
-import com.api.moviedb.data.remote.model.nowplaying.NowPlaying
+import com.api.moviedb.data.remote.model.nowplaying.NowPlayingMovies
 import com.api.moviedb.data.remote.model.popular.PopularMovie
 import com.api.moviedb.data.remote.model.searchmovie.SearchedMovies
 import com.api.moviedb.data.remote.model.toprated.TopRatedMovies
@@ -39,9 +39,9 @@ interface MovieApi {
         @Query(API_KEY_STRING) apiKey: String = API_KEY,
     ): Observable<MovieDetail>
 
-    @GET("$SEARCH_MOVIES_URL/{query}")
+    @GET("$SEARCH_MOVIES_URL")
     fun searchMovies(
-        @Path(QUERY) query: String,
+        @Query(QUERY) query: String,
         @Query(PAGE) page: Int,
         @Query(API_KEY_STRING) apiKey: String = API_KEY,
     ): Observable<SearchedMovies>
@@ -50,7 +50,7 @@ interface MovieApi {
     fun getNowPlaying(
         @Query(PAGE) page: Int,
         @Query(API_KEY_STRING) apiKey: String = API_KEY,
-    ): Observable<NowPlaying>
+    ): Observable<NowPlayingMovies>
 
 
     @GET(POPULAR_URL)

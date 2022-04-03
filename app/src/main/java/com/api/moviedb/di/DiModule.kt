@@ -1,14 +1,19 @@
 package com.api.moviedb.di
 
+import android.content.Context
 import com.api.moviedb.BuildConfig
 import com.api.moviedb.data.local.db.dao.MovieDetailsDao
 import com.api.moviedb.data.remote.api.MovieApi
 import com.api.moviedb.data.repository.MovieRepositoryImpl
 import com.api.moviedb.domain.repository.MovieRepository
+import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideContext
+import com.bumptech.glide.RequestManager
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -62,5 +67,8 @@ class DiModule {
         )
     }
 
-
+    @Provides
+    fun provideGlide(@ApplicationContext appContext: Context) : RequestManager {
+        return Glide.with(appContext)
+    }
 }

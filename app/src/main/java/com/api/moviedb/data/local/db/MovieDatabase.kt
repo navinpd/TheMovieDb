@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.api.moviedb.data.local.db.dao.MovieDetailsDao
 import com.api.moviedb.data.local.model.movieDetails.MovieDetailEntity
-import com.api.moviedb.data.local.db.typerConvertor.*
+import com.api.moviedb.data.local.db.typeconvertor.*
 import com.google.gson.Gson
 import javax.inject.Singleton
 
