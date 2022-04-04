@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.api.moviedb.databinding.FragmentNotificationsBinding
+import com.api.moviedb.presentation.ui.upcoming.UpcomingMovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -16,8 +18,9 @@ class TopRatedMovieFragment : Fragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
 
-    @Inject
-    lateinit var viewModel: TopRatedMovieViewModel
+    private val viewModel by viewModels<TopRatedMovieViewModel> {
+        defaultViewModelProviderFactory
+    }
 
     // This property is only valid between onCreateView and
     // onDestroyView.

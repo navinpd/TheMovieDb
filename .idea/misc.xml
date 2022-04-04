@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.14488348530901723" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.14488348530901723" />
         <entry key="app/src/main/res/layout/fragment_search_result.xml" value="0.14488348530901723" />
+        <entry key="app/src/main/res/layout/fragment_upcoming.xml" value="0.1" />
         <entry key="app/src/main/res/layout/movie_view_adapter.xml" value="0.14488348530901723" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.16944444444444445" />
       </map>

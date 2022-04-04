@@ -1,5 +1,6 @@
 package com.api.moviedb.data.remote.model.popular
 
+import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.google.gson.annotations.SerializedName
 
 

@@ -1,5 +1,6 @@
 package com.api.moviedb.data.remote.model.toprated
 
+import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.google.gson.annotations.SerializedName
 
 

@@ -39,7 +39,7 @@ interface MovieApi {
         @Query(API_KEY_STRING) apiKey: String = API_KEY,
     ): Observable<MovieDetail>
 
-    @GET("$SEARCH_MOVIES_URL")
+    @GET(SEARCH_MOVIES_URL)
     fun searchMovies(
         @Query(QUERY) query: String,
         @Query(PAGE) page: Int,

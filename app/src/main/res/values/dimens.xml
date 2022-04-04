@@ -20,6 +20,7 @@
     <dimen name="d10">80dp</dimen>
     <dimen name="d12">96dp</dimen>
     <dimen name="d15">120dp</dimen>
+    <dimen name="d16">224dp</dimen>
 
     <dimen name="error_view_button_width">130dp</dimen>
 

@@ -3,35 +3,37 @@ package com.api.moviedb.presentation.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
+import com.api.moviedb.data.remote.model.genere.GeneresResponse
+import com.api.moviedb.data.remote.model.movieDetails.Genres
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
-import com.api.moviedb.domain.model.MovieIdData
 import com.api.moviedb.domain.usecase.MainUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+
+@HiltViewModel
 class MovieViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
 
-    private val movieDetailData = MutableLiveData<MovieDetail>()
-    val movieDetailState: LiveData<MovieDetail>
-        get() = movieDetailData
+    private val genreData = MutableLiveData<GeneresResponse>()
+    val genreState: LiveData<GeneresResponse>
+        get() = genreData
 
     private val loadingMutableState = MutableLiveData<ViewMovieState>()
-    val loadingState: LiveData<ViewMovieState>
-        get() = loadingMutableState
 
-    fun getMovieDetails(movieId: Int) {
-        mainUseCase.movieDetailUseCase
-            .run(MovieIdData(movieId))
+    fun getGenre() {
+        mainUseCase.genreUseCase
+            .run()
             .subscribeOn(Schedulers.io())
             .doOnSubscribe { showLoading() }
             .observeOn(AndroidSchedulers.mainThread())
             .doAfterTerminate { hideLoading() }
             .subscribe(
-                { onMovieDetailRetrieved(it) },
-                { onMovieFetchFailed(it) }
+                { onGenreRetrieved(it) },
+                { onGenreFetchFailed(it) }
             ).disposedBy(compositeDisposable)
     }
 
@@ -43,11 +45,11 @@ class MovieViewModel @Inject constructor(
         loadingMutableState.postValue(ViewMovieState.HideLoading)
     }
 
-    private fun onMovieDetailRetrieved(movieDetail: MovieDetail) {
-        movieDetailData.value = movieDetail
+    private fun onGenreRetrieved(genre: GeneresResponse) {
+        genreData.value = genre
     }
 
-    private fun onMovieFetchFailed(throwable: Throwable) {
+    private fun onGenreFetchFailed(throwable: Throwable) {
         loadingMutableState.postValue(ViewMovieState.ShowError)
     }
 }

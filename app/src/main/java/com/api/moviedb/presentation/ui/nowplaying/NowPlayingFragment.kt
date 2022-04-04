@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.databinding.FragmentHomeBinding
+import com.api.moviedb.util.INextPage
 import com.bumptech.glide.RequestManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NowPlayingFragment : Fragment() {
+class NowPlayingFragment : Fragment(), INextPage {
 
     @Inject
     lateinit var glide: RequestManager
@@ -39,6 +40,7 @@ class NowPlayingFragment : Fragment() {
 
         val nowPlayingList = mutableListOf<Results>()
         val nowPlayingAdapter = NowPlayingAdapter(nowPlayingList, glide)
+        nowPlayingAdapter.requestForNextItem = this
         nowPlayingRV.adapter = nowPlayingAdapter
         nowPlayingRV.layoutManager = LinearLayoutManager(activity)
 
@@ -48,9 +50,15 @@ class NowPlayingFragment : Fragment() {
             nowPlayingAdapter.notifyItemRangeChanged(size, size + it.results.size)
         }
 
-        viewModel.getNowPlayingMovies(1)
+        if (nowPlayingList.size == 0) {
+            viewModel.getNowPlayingMovies(1)
+        }
 
         return root
+    }
+
+    override fun loadNextPage() {
+        viewModel.invokeNextPage()
     }
 
     override fun onDestroyView() {

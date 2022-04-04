@@ -18,7 +18,7 @@ class NowPlayingViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
     var currentPage = 0
-    var totalPage  = 1
+    var totalPage = 1
 
     private val nowPlayingMovieLiveData = MutableLiveData<NowPlayingMovies>()
     val nowPlayingMoviesMovieData: LiveData<NowPlayingMovies>
@@ -28,18 +28,23 @@ class NowPlayingViewModel @Inject constructor(
     val loadingState: LiveData<ViewMovieState>
         get() = loadingMutableState
 
+    fun invokeNextPage() {
+        getNowPlayingMovies(page = currentPage + 1)
+    }
+
     fun getNowPlayingMovies(page: Int) {
-        if(page in (currentPage + 1)..totalPage)
-        mainUseCase.nowPlayingUseCase
-            .run(params = PageNumberData(page))
-            .subscribeOn(Schedulers.io())
-            .doOnSubscribe { showLoading() }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doAfterTerminate { hideLoading() }
-            .subscribe(
-                { nowPlayingMovieRetrieved(it) },
-                { onMovieFetchFailed(it) }
-            ).disposedBy(compositeDisposable = compositeDisposable)
+        if (page in (currentPage + 1)..totalPage) {
+            mainUseCase.nowPlayingUseCase
+                .run(params = PageNumberData(page))
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe { showLoading() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate { hideLoading() }
+                .subscribe(
+                    { nowPlayingMovieRetrieved(it) },
+                    { onMovieFetchFailed(it) }
+                ).disposedBy(compositeDisposable = compositeDisposable)
+        }
     }
 
     override fun showLoading() {
