@@ -10,6 +10,8 @@ class MainUseCase @Inject constructor(
     val popularUseCase: PopularUseCase,
     val topRatedUseCase: TopRatedUseCase,
     val upcomingUseCase: UpcomingUseCase,
-    val favMovieDelete : FavMovieDelete,
-
+    val favMovieDeleteUseCase : FavMovieDeleteUseCase,
+    val favMoviesListGetUseCase :FavMoviesGetUseCase,
+    val favMovieGetUseCase :FavMovieGetUseCase,
+    val favMovieStoreUseCase: FavMovieStoreUseCase
 )

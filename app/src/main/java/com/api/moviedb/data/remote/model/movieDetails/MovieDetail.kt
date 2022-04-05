@@ -11,7 +11,7 @@ data class MovieDetail(
     @SerializedName("backdrop_path")
     var backdropPath: String? = null,
     @SerializedName("belongs_to_collection")
-    var belongsToCollection: String? = null,
+    var belongsToCollection: BelongsToCollection? = null,
     @SerializedName("budget")
     var budget: Int? = null,
     @SerializedName("genres")

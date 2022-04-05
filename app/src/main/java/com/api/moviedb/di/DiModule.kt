@@ -1,13 +1,17 @@
 package com.api.moviedb.di
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import com.api.moviedb.BuildConfig
 import com.api.moviedb.data.local.db.dao.MovieDetailsDao
+import com.api.moviedb.data.local.db.mapper.MovieDetailDataToEntityMapper
+import com.api.moviedb.data.local.db.mapper.MovieEntityToDataMapper
+import com.api.moviedb.data.local.db.mapper.MovieListEntityToMovieListDataMapper
 import com.api.moviedb.data.remote.api.MovieApi
 import com.api.moviedb.data.repository.MovieRepositoryImpl
 import com.api.moviedb.domain.repository.MovieRepository
 import com.bumptech.glide.Glide
-import com.bumptech.glide.GlideContext
 import com.bumptech.glide.RequestManager
 import dagger.Module
 import dagger.Provides
@@ -27,6 +31,7 @@ class DiModule {
 
     private companion object {
         const val BASE_URL = "https://api.themoviedb.org/"
+        const val SHARED_PREFERENCE = "LOCAL_PREFERENCE"
         private val client = OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor()
@@ -59,16 +64,27 @@ class DiModule {
     @Provides
     fun provideMovieRepository(
         movieApi: MovieApi,
-        movieDetailsDao: MovieDetailsDao
+        movieDetailsDao: MovieDetailsDao,
+        movieDataToEntityMapper: MovieDetailDataToEntityMapper,
+        movieListEntityToDataMapper: MovieListEntityToMovieListDataMapper,
+        movieEntityToDataMapper: MovieEntityToDataMapper
     ): MovieRepository {
         return MovieRepositoryImpl(
             movieApi = movieApi,
-            dbApi = movieDetailsDao
+            dbApi = movieDetailsDao,
+            movieDataToEntityMapper = movieDataToEntityMapper,
+            movieListEntityToDataMapper = movieListEntityToDataMapper,
+            movieEntityToDataMapper = movieEntityToDataMapper
         )
     }
 
     @Provides
-    fun provideGlide(@ApplicationContext appContext: Context) : RequestManager {
+    fun provideGlide(@ApplicationContext appContext: Context): RequestManager {
         return Glide.with(appContext)
+    }
+
+    @Provides
+    fun provideSharedPref(@ApplicationContext appContext: Context) : SharedPreferences {
+        return appContext.getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE)
     }
 }

@@ -7,25 +7,26 @@
 
     <fragment
         android:id="@+id/navigation_now_playing"
-        android:name="com.api.moviedb.presentation.ui.nowplaying.NowPlayingFragment"
+        android:name="com.api.moviedb.presentation.ui.main.nowplaying.NowPlayingFragment"
         android:label="@string/now_playing"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_popular"
-        android:name="com.api.moviedb.presentation.ui.popular.PopularMovieFragment"
+        android:name="com.api.moviedb.presentation.ui.main.popular.PopularMovieFragment"
         android:label="@string/popular"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_popular" />
 
     <fragment
         android:id="@+id/navigation_top_rated"
-        android:name="com.api.moviedb.presentation.ui.toprated.TopRatedMovieFragment"
+        android:name="com.api.moviedb.presentation.ui.main.toprated.TopRatedMovieFragment"
         android:label="@string/top_rated"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_upcoming"
-        android:name="com.api.moviedb.presentation.ui.upcoming.UpcomingMovieFragment"
+        android:name="com.api.moviedb.presentation.ui.main.upcoming.UpcomingMovieFragment"
         android:label="@string/upcoming"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_upcoming" />
+
 </navigation>

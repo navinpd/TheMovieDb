@@ -18,4 +18,6 @@ interface MovieDetailsDao {
     @Query("DELETE FROM Movie_Detail WHERE id = :id")
     fun deleteMovieById(id: Int)
 
+    @Query("SELECT * FROM Movie_Detail WHERE id = :id")
+    fun getFavMovie(id: Int): Observable<MovieDetailEntity>
 }

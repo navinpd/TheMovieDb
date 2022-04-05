@@ -8,7 +8,7 @@ data class MovieDetailEntity(
     @PrimaryKey val id: Int,
     val adult: Boolean? = false,
     val backdropPath: String? = "",
-    val belongsToCollection: String? = "",
+    val belongsToCollection: BelongsCollectionData? = null,
     val budget: Int? = 0,
     val homepage: String? = "",
     val imdbId: String? = "",

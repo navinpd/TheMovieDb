@@ -1,13 +1,16 @@
 package com.api.moviedb.data.repository
 
+import android.util.Log
 import com.api.moviedb.data.local.db.dao.MovieDetailsDao
-import com.api.moviedb.data.local.db.mapper.*
+import com.api.moviedb.data.local.db.mapper.MovieDetailDataToEntityMapper
+import com.api.moviedb.data.local.db.mapper.MovieEntityToDataMapper
+import com.api.moviedb.data.local.db.mapper.MovieListEntityToMovieListDataMapper
 import com.api.moviedb.data.remote.api.MovieApi
 import com.api.moviedb.data.remote.model.genere.GeneresResponse
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
 import com.api.moviedb.data.remote.model.nowplaying.NowPlayingMovies
 import com.api.moviedb.data.remote.model.popular.PopularMovie
-import com.api.moviedb.data.remote.model.searchmovie.SearchedMovies
+import com.api.moviedb.data.remote.model.searchmovie.SearchResultMovies
 import com.api.moviedb.data.remote.model.toprated.TopRatedMovies
 import com.api.moviedb.data.remote.model.upcoming.UpcomingMovies
 import com.api.moviedb.domain.repository.MovieRepository
@@ -16,19 +19,16 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi,
-    private val dbApi: MovieDetailsDao
+    private val dbApi: MovieDetailsDao,
+    private val movieDataToEntityMapper: MovieDetailDataToEntityMapper,
+    private val movieListEntityToDataMapper: MovieListEntityToMovieListDataMapper,
+    private val movieEntityToDataMapper: MovieEntityToDataMapper
 ) : MovieRepository {
-
-    @Inject
-    lateinit var movieDataToEntityMapper: MovieDetailDataToEntityMapper
-
-    @Inject
-    lateinit var movieDetailEntityToDataMapper : MovieDetailEntityToDetailDataMapper
 
     override fun searchMovies(
         query: String,
         pageNumber: Int,
-    ): Observable<SearchedMovies> =
+    ): Observable<SearchResultMovies> =
         movieApi.searchMovies(query = query, page = pageNumber)
 
     override fun getMovieDetails(
@@ -61,8 +61,9 @@ class MovieRepositoryImpl @Inject constructor(
         movieApi.getGenre()
 
     override fun getFavMovies(): Observable<ArrayList<MovieDetail>> {
-        val movieDetail = movieDetailEntityToDataMapper
-            .map(dbApi.getAllLikedMovies().blockingLast())
+        val data = dbApi.getAllLikedMovies().blockingFirst()
+        val movieDetail = movieListEntityToDataMapper
+            .map(data)
         return Observable.just(movieDetail)
     }
 
@@ -73,5 +74,13 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun deleteFavMovie(movieId: Int) {
         dbApi.deleteMovieById(movieId)
+    }
+
+    override fun getFavMovie(movieId: Int): Observable<MovieDetail> {
+        return Observable.just(
+            movieEntityToDataMapper.map(
+                dbApi.getFavMovie(movieId).blockingFirst()
+            )
+        )
     }
 }

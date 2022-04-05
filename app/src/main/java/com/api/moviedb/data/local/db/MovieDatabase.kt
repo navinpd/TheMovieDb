@@ -14,7 +14,8 @@ import javax.inject.Singleton
     GenreTypeConvertor::class,
     ProdCountryTypeConvertor::class,
     ProdCompanyTypeConvertor::class,
-    SpokenLangTypeConvertor::class
+    SpokenLangTypeConvertor::class,
+    BelongsCollectionConvertor::class
 )
 @Singleton
 abstract class MovieDatabase : RoomDatabase() {

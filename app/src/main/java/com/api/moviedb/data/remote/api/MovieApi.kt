@@ -15,7 +15,7 @@ import com.api.moviedb.data.remote.model.genere.GeneresResponse
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
 import com.api.moviedb.data.remote.model.nowplaying.NowPlayingMovies
 import com.api.moviedb.data.remote.model.popular.PopularMovie
-import com.api.moviedb.data.remote.model.searchmovie.SearchedMovies
+import com.api.moviedb.data.remote.model.searchmovie.SearchResultMovies
 import com.api.moviedb.data.remote.model.toprated.TopRatedMovies
 import com.api.moviedb.data.remote.model.upcoming.UpcomingMovies
 import io.reactivex.Observable
@@ -44,7 +44,7 @@ interface MovieApi {
         @Query(QUERY) query: String,
         @Query(PAGE) page: Int,
         @Query(API_KEY_STRING) apiKey: String = API_KEY,
-    ): Observable<SearchedMovies>
+    ): Observable<SearchResultMovies>
 
     @GET(NOW_PLAYING_URL)
     fun getNowPlaying(

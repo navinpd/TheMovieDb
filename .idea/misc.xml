@@ -12,12 +12,21 @@
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1275" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.1275" />
         <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1275" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.14488348530901723" />
+        <entry key="app/src/main/res/layout/activity_liked_movies.xml" value="0.18297101449275363" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_movie_detail.xml" value="0.17844202898550723" />
+        <entry key="app/src/main/res/layout/activity_movie_list.xml" value="0.20804676352860674" />
+        <entry key="app/src/main/res/layout/activity_search_movies.xml" value="0.14322916666666666" />
+        <entry key="app/src/main/res/layout/adapter_movie_view.xml" value="0.2833333333333333" />
+        <entry key="app/src/main/res/layout/divider.xml" value="0.15307971014492755" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.14488348530901723" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.14488348530901723" />
+        <entry key="app/src/main/res/layout/fragment_movie_detail.xml" value="0.25449101796407186" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_popular.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_search_result.xml" value="0.14488348530901723" />
         <entry key="app/src/main/res/layout/fragment_upcoming.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/movie_view_adapter.xml" value="0.14488348530901723" />
+        <entry key="app/src/main/res/layout/movie_view_adapter.xml" value="0.2730249314081101" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.16944444444444445" />
       </map>
     </option>

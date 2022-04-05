@@ -20,12 +20,15 @@ class MovieDetailDataToEntityMapper @Inject constructor() :
     @Inject
     lateinit var spokenLangDataToEntityMapper: SpokenLangDataToEntityMapper
 
+    @Inject
+    lateinit var belongsCollectionDataToEntityMapper: BelongsCollectionDataToEntityMapper
+
     override fun map(md: MovieDetail): MovieDetailEntity {
         return MovieDetailEntity(
             id = md.id!!,
             adult = md.adult,
             backdropPath = md.backdropPath,
-            belongsToCollection = md.belongsToCollection,
+            belongsToCollection = belongsCollectionDataToEntityMapper.map(md.belongsToCollection),
             budget = md.budget,
             homepage = md.homepage,
             imdbId = md.imdbId,
