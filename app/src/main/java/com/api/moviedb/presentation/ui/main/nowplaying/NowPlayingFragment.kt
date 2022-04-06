@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.databinding.FragmentHomeBinding
 import com.api.moviedb.presentation.ui.moviedetail.MovieDetailActivity
+import com.api.moviedb.presentation.ui.viewmodel.ViewMovieState
 import com.api.moviedb.util.INextPage
 import com.api.moviedb.util.MOVIE_ID_INTENT_EXTRA
 import com.bumptech.glide.RequestManager
@@ -51,6 +52,22 @@ class NowPlayingFragment : Fragment(), INextPage {
             val size = nowPlayingList.size
             nowPlayingList.addAll(it.results)
             nowPlayingAdapter.notifyItemRangeChanged(size, size + it.results.size)
+        }
+
+        viewModel.loadingState.observe(viewLifecycleOwner) {
+            when (it) {
+                is ViewMovieState.ShowError -> {
+
+                }
+
+                is ViewMovieState.HideLoading -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                is ViewMovieState.ShowLoading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+            }
         }
 
         return root

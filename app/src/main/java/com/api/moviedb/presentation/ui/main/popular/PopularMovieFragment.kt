@@ -13,6 +13,7 @@ import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.databinding.FragmentPopularBinding
 import com.api.moviedb.presentation.ui.main.nowplaying.MovieListAdapter
 import com.api.moviedb.presentation.ui.moviedetail.MovieDetailActivity
+import com.api.moviedb.presentation.ui.viewmodel.ViewMovieState
 import com.api.moviedb.util.INextPage
 import com.api.moviedb.util.MOVIE_ID_INTENT_EXTRA
 import com.bumptech.glide.RequestManager
@@ -54,6 +55,23 @@ class PopularMovieFragment : Fragment(), INextPage {
             popularMovieList.addAll(it.results)
             adapter.notifyItemRangeChanged(size, size + it.results.size)
         }
+
+        viewModel.loadingState.observe(viewLifecycleOwner) {
+            when (it) {
+                is ViewMovieState.ShowError -> {
+
+                }
+
+                is ViewMovieState.HideLoading -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                is ViewMovieState.ShowLoading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+            }
+        }
+
         return root
     }
 

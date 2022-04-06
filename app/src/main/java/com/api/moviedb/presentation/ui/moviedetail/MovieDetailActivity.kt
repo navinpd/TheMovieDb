@@ -2,6 +2,7 @@ package com.api.moviedb.presentation.ui.moviedetail
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.api.moviedb.data.remote.model.movieDetails.Genres
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
 import com.api.moviedb.data.remote.model.movieDetails.SpokenLanguages
 import com.api.moviedb.databinding.ActivityMovieDetailBinding
+import com.api.moviedb.presentation.ui.viewmodel.ViewMovieState
 import com.api.moviedb.util.FAV_MOVIE_INTENT_EXTRA
 import com.api.moviedb.util.IMAGE_PATH_PREFIX
 import com.api.moviedb.util.MOVIE_ID_INTENT_EXTRA
@@ -74,6 +76,22 @@ class MovieDetailActivity : AppCompatActivity() {
             }
 
             updateLocalMovieState()
+        }
+
+        viewModel.loadingState.observe(this) {
+            when (it) {
+                is ViewMovieState.ShowError -> {
+
+                }
+
+                is ViewMovieState.HideLoading -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                is ViewMovieState.ShowLoading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+            }
         }
 
         invokeMovieDetails()

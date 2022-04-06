@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:padding="@dimen/d1">
 
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title_tv"
         style="@style/TitleLg"
@@ -28,7 +27,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_tv" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/now_playing_rv"
         android:layout_width="match_parent"
@@ -37,5 +35,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_tv" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:max="100"
+        android:minWidth="250dp"
+        android:minHeight="50dp"
+        android:progress="1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

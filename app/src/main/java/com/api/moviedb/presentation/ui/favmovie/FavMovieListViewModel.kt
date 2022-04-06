@@ -23,10 +23,6 @@ class FavMovieListViewModel @Inject constructor(
     val movieListLD: LiveData<ArrayList<MovieDetail>>
         get() = movieListMLiveData
 
-    private val movieStatusMLiveData = MutableLiveData<Boolean>()
-    val movieStoreStat: LiveData<Boolean>
-        get() = movieStatusMLiveData
-
     private val loadingMutableState = MutableLiveData<ViewMovieState>()
     val loadingState: LiveData<ViewMovieState>
         get() = loadingMutableState

@@ -11,6 +11,7 @@ import com.api.moviedb.R
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
 import com.api.moviedb.databinding.ActivityLikedMoviesBinding
 import com.api.moviedb.presentation.ui.moviedetail.MovieDetailActivity
+import com.api.moviedb.presentation.ui.viewmodel.ViewMovieState
 import com.api.moviedb.util.FAV_MOVIE_INTENT_EXTRA
 import com.api.moviedb.util.INextPage
 import com.api.moviedb.util.MOVIE_ID_INTENT_EXTRA
@@ -67,6 +68,21 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
             }
         }
 
+        viewModel.loadingState.observe(this) {
+            when (it) {
+                is ViewMovieState.ShowError -> {
+
+                }
+
+                is ViewMovieState.HideLoading -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                is ViewMovieState.ShowLoading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     override fun onStart() {

@@ -12,6 +12,7 @@ import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.databinding.ActivitySearchMoviesBinding
 import com.api.moviedb.presentation.ui.main.nowplaying.MovieListAdapter
 import com.api.moviedb.presentation.ui.moviedetail.MovieDetailActivity
+import com.api.moviedb.presentation.ui.viewmodel.ViewMovieState
 import com.api.moviedb.util.INextPage
 import com.api.moviedb.util.MOVIE_ID_INTENT_EXTRA
 import com.api.moviedb.util.SEARCH_QUERY_INTENT_EXTRA
@@ -59,6 +60,23 @@ class SearchMovieListActivity : AppCompatActivity(), INextPage {
                 adapter.notifyItemRangeChanged(size, size + it.results.size)
             }
         }
+
+        viewModel.loadingState.observe(this) {
+            when (it) {
+                is ViewMovieState.ShowError -> {
+
+                }
+
+                is ViewMovieState.HideLoading -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                is ViewMovieState.ShowLoading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+            }
+        }
+
         viewModel.getSearchedResultMovies(query, 1)
     }
 
