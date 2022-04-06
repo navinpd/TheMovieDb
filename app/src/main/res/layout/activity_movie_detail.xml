@@ -133,5 +133,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/error_message"
+            style="@style/TitleMd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d0"
+            android:gravity="center"
+            android:text="@string/no_data_searched"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
