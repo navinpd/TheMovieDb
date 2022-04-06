@@ -27,6 +27,7 @@ class NowPlayingFragment : Fragment(), INextPage {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private val nowPlayingList = mutableListOf<Results>()
     private val viewModel by viewModels<NowPlayingViewModel> {
         defaultViewModelProviderFactory
     }
@@ -40,7 +41,6 @@ class NowPlayingFragment : Fragment(), INextPage {
         val root: View = binding.root
 
         val nowPlayingRV = binding.nowPlayingRv
-        val nowPlayingList = mutableListOf<Results>()
         val nowPlayingAdapter = MovieListAdapter(nowPlayingList, glide)
 
         nowPlayingAdapter.requestForNextItem = this
@@ -53,11 +53,14 @@ class NowPlayingFragment : Fragment(), INextPage {
             nowPlayingAdapter.notifyItemRangeChanged(size, size + it.results.size)
         }
 
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (nowPlayingList.size == 0) {
             viewModel.getNowPlayingMovies(1)
         }
-
-        return root
     }
 
     override fun loadNextPage() {

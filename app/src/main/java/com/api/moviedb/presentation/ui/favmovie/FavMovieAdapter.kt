@@ -42,9 +42,9 @@ class FavMovieAdapter(
 
         holder.binding.also {
             val result = listItem[position]
-            val imagePostfix = result.backdropPath ?: result.posterPath
+            val imagePath = IMAGE_PATH_PREFIX + (result.backdropPath ?: result.posterPath)
 
-            glide.load(IMAGE_PATH_PREFIX + imagePostfix)
+            glide.load(imagePath)
                 .error(R.drawable.ic_baseline_error_24)
                 .apply(options)
                 .placeholder(R.drawable.ic_baseline_downloading_24)

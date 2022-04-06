@@ -38,7 +38,6 @@ class SearchMovieListActivity : AppCompatActivity(), INextPage {
         binding = ActivitySearchMoviesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.titleTv.text = getString(R.string.search_movie_result)
         val searchRv = binding.nowPlayingRv
         val searchResult = mutableListOf<Results>()
         val adapter = MovieListAdapter(searchResult, glide)
@@ -46,6 +45,7 @@ class SearchMovieListActivity : AppCompatActivity(), INextPage {
         searchRv.adapter = adapter
         searchRv.layoutManager = LinearLayoutManager(this)
 
+        binding.titleTv.text = getString(R.string.search_movie_result)
         viewModel.searchMovieData.observe(this) {
             val size = it.results.size
             Log.d("TAG", "Data size is $size")

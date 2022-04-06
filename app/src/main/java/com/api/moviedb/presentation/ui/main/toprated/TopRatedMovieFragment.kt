@@ -1,7 +1,6 @@
 package com.api.moviedb.presentation.ui.main.toprated
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +24,7 @@ class TopRatedMovieFragment : Fragment(), INextPage {
 
     private var _binding: FragmentNotificationsBinding? = null
 
+    private val topRatedMovieList = mutableListOf<Results>()
     private val viewModel by viewModels<TopRatedMovieViewModel> {
         defaultViewModelProviderFactory
     }
@@ -45,21 +45,25 @@ class TopRatedMovieFragment : Fragment(), INextPage {
 
         val nowPlayingRV: RecyclerView = binding.topRatedRv
 
-        val nowPlayingList = mutableListOf<Results>()
-        val adapter = MovieListAdapter(nowPlayingList, glide)
+        val adapter = MovieListAdapter(topRatedMovieList, glide)
         adapter.requestForNextItem = this
         nowPlayingRV.adapter = adapter
         nowPlayingRV.layoutManager = LinearLayoutManager(activity)
 
         viewModel.topRatedMovieData.observe(viewLifecycleOwner) {
-            val size = nowPlayingList.size
-            nowPlayingList.addAll(it.results)
+            val size = topRatedMovieList.size
+            topRatedMovieList.addAll(it.results)
             adapter.notifyItemRangeChanged(size, size + it.results.size)
         }
 
-        viewModel.getTopRatedMovies(page = 1)
-
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (topRatedMovieList.size == 0) {
+            viewModel.getTopRatedMovies(page = 1)
+        }
     }
 
     override fun loadNextPage() {

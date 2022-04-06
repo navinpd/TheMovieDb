@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.api.common.toCommaSeparate
 import com.api.common.toDateFormat
 import com.api.moviedb.R
+import com.api.moviedb.data.remote.model.movieDetails.Genres
+import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
+import com.api.moviedb.data.remote.model.movieDetails.SpokenLanguages
 import com.api.moviedb.databinding.ActivityMovieDetailBinding
 import com.api.moviedb.util.FAV_MOVIE_INTENT_EXTRA
 import com.api.moviedb.util.IMAGE_PATH_PREFIX
@@ -45,69 +48,79 @@ class MovieDetailActivity : AppCompatActivity() {
 
         val options = RequestOptions().centerInside()
         viewModel.movieDetailState.observe(this) {
-            val imagePostfix = it.backdropPath ?: it.posterPath
-            val imagePath = IMAGE_PATH_PREFIX + imagePostfix
+            val imagePath = IMAGE_PATH_PREFIX + (it.backdropPath ?: it.posterPath)
 
-            binding.releaseDateTv.text =
-                getString(R.string.release_date, it.releaseDate.toDateFormat())
+            binding.run {
+                releaseDateTv.text = getString(R.string.release_date, it.releaseDate.toDateFormat())
+                overviewTv.text = getString(R.string.overview_text, it.overview)
+                tagLineTv.text = getString(R.string.tagline_text, it.tagline)
+                titleTv.text = it.title
+                ratingBar.rating = (it.voteAverage!!.div(2)).toFloat()
+                voteCountTv.text = it.voteCount.toCommaSeparate()
+                statusTv.text = getString(R.string.release_text, it.status)
+                genreTv.text = getGenre(it.genres)
 
-            binding.overviewTv.text = getString(R.string.overview_text, it.overview)
-            binding.tagLineTv.text = getString(R.string.tagline_text, it.tagline)
-            binding.titleTv.text = it.title
+                glide.load(imagePath)
+                    .error(R.drawable.ic_baseline_error_24)
+                    .apply(options)
+                    .placeholder(R.drawable.ic_baseline_downloading_24)
+                    .into(backdropIv)
 
-            binding.ratingBar.rating = (it.voteAverage!!.div(2)).toFloat()
-            binding.voteCountTv.text = it.voteCount.toCommaSeparate()
-            binding.statusTv.text = getString(R.string.release_text, it.status)
-
-            var genre = ""
-            it.genres.forEach { genres ->
-                genre = if (genre.isEmpty()) genres.name!! else genre + ", " + genres.name
-            }
-
-            binding.genreTv.text =
-                if (genre.isEmpty()) getString(R.string.genre_hyphen) else getString(
-                    R.string.genre_data,
-                    genre
-                )
-            glide.load(imagePath)
-                .error(R.drawable.ic_baseline_error_24)
-                .apply(options)
-                .placeholder(R.drawable.ic_baseline_downloading_24)
-                .into(binding.backdropIv)
-
-            var lang = ""
-            it.spokenLanguages.forEach { language ->
-                lang =
-                    if (lang.isEmpty()) language.englishName!! else "$lang, ${language.englishName}"
-
-            }
-            binding.spokenLanguageTv.text =
-                if (lang.isEmpty()) getString(R.string.language_hyphen) else getString(
-                    R.string.language_data,
-                    lang
-                )
-
-            if (fromFavMovie) {
-                saveToLocal = false
-                binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_white_24)
+                spokenLanguageTv.text = spokenLanguage(it.spokenLanguages)
             }
 
             binding.markFavIv.setOnClickListener { _ ->
-                if (saveToLocal) {
-                    viewModel.storeFavMovie(it)
-                    Toast.makeText(this, getString(R.string.store_fav_movie), Toast.LENGTH_SHORT)
-                        .show()
-                    binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_white_24)
-                } else {
-                    viewModel.removeFavMovie(it.id!!)
-                    binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_color_24)
-                    Toast.makeText(this, getString(R.string.removed_fav_movie), Toast.LENGTH_SHORT)
-                        .show()
-                }
-                saveToLocal = !saveToLocal
+                processDbOperation(it)
             }
+
+            updateLocalMovieState()
         }
 
+        invokeMovieDetails()
+    }
+
+    private fun getGenre(genres: ArrayList<Genres>): String {
+        var genre = ""
+        genres.forEach { gen ->
+            genre = if (genre.isEmpty()) gen.name!! else genre + ", " + gen.name
+        }
+
+        if (genre.isEmpty()) getString(R.string.genre_hyphen) else getString(
+            R.string.genre_data,
+            genre
+        )
+        return genre
+    }
+
+    private fun spokenLanguage(it: ArrayList<SpokenLanguages>): String {
+        var lang = ""
+        it.forEach { language ->
+            lang =
+                if (lang.isEmpty()) language.englishName!! else "$lang, ${language.englishName}"
+        }
+        if (lang.isEmpty()) getString(R.string.language_hyphen) else getString(
+            R.string.language_data,
+            lang
+        )
+        return lang
+    }
+
+    private fun processDbOperation(it: MovieDetail) {
+        if (saveToLocal) {
+            viewModel.storeFavMovie(it)
+            Toast.makeText(this, getString(R.string.store_fav_movie), Toast.LENGTH_SHORT)
+                .show()
+            binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_white_24)
+        } else {
+            viewModel.removeFavMovie(it.id!!)
+            binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_color_24)
+            Toast.makeText(this, getString(R.string.removed_fav_movie), Toast.LENGTH_SHORT)
+                .show()
+        }
+        saveToLocal = !saveToLocal
+    }
+
+    private fun invokeMovieDetails() {
         if (fromFavMovie) {
             viewModel.getFavMovieFromLocal(movieId)
         } else {
@@ -115,4 +128,10 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateLocalMovieState() {
+        if (fromFavMovie) {
+            saveToLocal = false
+            binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_white_24)
+        }
+    }
 }

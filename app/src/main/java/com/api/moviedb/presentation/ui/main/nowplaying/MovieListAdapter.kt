@@ -40,29 +40,40 @@ class MovieListAdapter(
             requestForNextItem.loadNextPage()
         }
 
-        holder.binding.also {
+        holder.binding.run {
             val result = listItem[position]
-            val imagePostfix = result.backdropPath ?: result.posterPath
+            val imagePath = IMAGE_PATH_PREFIX + (result.backdropPath ?: result.posterPath)
 
-            glide.load(IMAGE_PATH_PREFIX + imagePostfix)
+            glide.load(imagePath)
                 .error(R.drawable.ic_baseline_error_24)
                 .apply(options)
                 .placeholder(R.drawable.ic_baseline_downloading_24)
-                .into(it.movieImage)
-            it.titleText.text = result.title
-            it.ratingBar.rating = (result.voteAverage!!.div(2)).toFloat()
+                .into(movieImage)
+            titleText.text = result.title
+            ratingBar.rating = (result.voteAverage!!.div(2)).toFloat()
 
-            it.releaseDate.text = context.getString(R.string.release_date, result.releaseDate?.toDateFormat())
-            it.voteCountTv.text = result.voteCount?.toCommaSeparate()
-            var genre = ""
-            result.genreIds.forEach { genreId ->
-                genre = if (genre.isEmpty()) genreMap[genreId]!! else "$genre, " + genreMap[genreId]
-            }
-            it.genreText.text = if (genre.isEmpty()) context.getString(R.string.genre_hyphen) else context.getString(R.string.genre_data, genre)
-            it.cardHolder.setOnClickListener {
+            releaseDate.text =
+                context.getString(R.string.release_date, result.releaseDate?.toDateFormat())
+            voteCountTv.text = result.voteCount?.toCommaSeparate()
+
+            genreText.text = getGenre(result.genreIds)
+
+            cardHolder.setOnClickListener {
                 requestForNextItem.getMovieDetails(result.id!!)
             }
         }
+    }
+
+    private fun getGenre(data: ArrayList<Int>): String {
+        var genre = ""
+        data.forEach { genreId ->
+            genre = if (genre.isEmpty()) genreMap[genreId]!! else "$genre, " + genreMap[genreId]
+        }
+        if (genre.isEmpty()) context.getString(R.string.genre_hyphen) else context.getString(
+            R.string.genre_data,
+            genre
+        )
+        return genre
     }
 
     override fun getItemCount(): Int {

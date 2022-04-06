@@ -27,6 +27,7 @@ class UpcomingMovieFragment : Fragment(), INextPage {
 
     private var _binding: FragmentUpcomingBinding? = null
     private val binding get() = _binding!!
+    private val nowPlayingList = mutableListOf<Results>()
 
     private val viewModel by viewModels<UpcomingMovieViewModel> {
         defaultViewModelProviderFactory
@@ -42,7 +43,6 @@ class UpcomingMovieFragment : Fragment(), INextPage {
 
         val nowPlayingRV: RecyclerView = binding.upcomingRv
 
-        val nowPlayingList = mutableListOf<Results>()
         val adapter = MovieListAdapter(nowPlayingList, glide)
         adapter.requestForNextItem = this
         nowPlayingRV.adapter = adapter
@@ -54,9 +54,14 @@ class UpcomingMovieFragment : Fragment(), INextPage {
             adapter.notifyItemRangeChanged(size, size + it.results.size)
         }
 
-        viewModel.upcomingMovies(1)
-
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (nowPlayingList.size == 0) {
+            viewModel.upcomingMovies(page = 1)
+        }
     }
 
     override fun loadNextPage() {

@@ -1,7 +1,6 @@
 package com.api.moviedb.presentation.ui.main.popular
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +27,7 @@ class PopularMovieFragment : Fragment(), INextPage {
 
     private var _binding: FragmentPopularBinding? = null
     private val binding get() = _binding!!
+    private val popularMovieList = mutableListOf<Results>()
 
     private val viewModel by viewModels<PopularMovieViewModel> {
         defaultViewModelProviderFactory
@@ -44,21 +44,24 @@ class PopularMovieFragment : Fragment(), INextPage {
 
         val nowPlayingRV: RecyclerView = binding.popularRv
 
-        val nowPlayingList = mutableListOf<Results>()
-        val adapter = MovieListAdapter(nowPlayingList, glide)
+        val adapter = MovieListAdapter(popularMovieList, glide)
         adapter.requestForNextItem = this
         nowPlayingRV.adapter = adapter
         nowPlayingRV.layoutManager = LinearLayoutManager(activity)
 
         viewModel.popularMovieData.observe(viewLifecycleOwner) {
-            val size = nowPlayingList.size
-            nowPlayingList.addAll(it.results)
+            val size = popularMovieList.size
+            popularMovieList.addAll(it.results)
             adapter.notifyItemRangeChanged(size, size + it.results.size)
         }
-
-        viewModel.getPopularMovies(1)
-
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (popularMovieList.size == 0) {
+            viewModel.getPopularMovies(1)
+        }
     }
 
     override fun loadNextPage() {
