@@ -5,16 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.api.moviedb.R
 import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.databinding.FragmentUpcomingBinding
-import com.api.moviedb.presentation.ui.main.nowplaying.NowPlayingAdapter
+import com.api.moviedb.presentation.ui.main.nowplaying.MovieListAdapter
 import com.api.moviedb.presentation.ui.moviedetail.MovieDetailActivity
 import com.api.moviedb.util.INextPage
 import com.api.moviedb.util.MOVIE_ID_INTENT_EXTRA
@@ -46,7 +43,7 @@ class UpcomingMovieFragment : Fragment(), INextPage {
         val nowPlayingRV: RecyclerView = binding.upcomingRv
 
         val nowPlayingList = mutableListOf<Results>()
-        val adapter = NowPlayingAdapter(nowPlayingList, glide)
+        val adapter = MovieListAdapter(nowPlayingList, glide)
         adapter.requestForNextItem = this
         nowPlayingRV.adapter = adapter
         nowPlayingRV.layoutManager = LinearLayoutManager(activity)

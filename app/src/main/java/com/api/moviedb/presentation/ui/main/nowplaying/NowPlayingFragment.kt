@@ -1,17 +1,14 @@
 package com.api.moviedb.presentation.ui.main.nowplaying
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.api.moviedb.R
 import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.databinding.FragmentHomeBinding
 import com.api.moviedb.presentation.ui.moviedetail.MovieDetailActivity
@@ -44,7 +41,7 @@ class NowPlayingFragment : Fragment(), INextPage {
 
         val nowPlayingRV = binding.nowPlayingRv
         val nowPlayingList = mutableListOf<Results>()
-        val nowPlayingAdapter = NowPlayingAdapter(nowPlayingList, glide)
+        val nowPlayingAdapter = MovieListAdapter(nowPlayingList, glide)
 
         nowPlayingAdapter.requestForNextItem = this
         nowPlayingRV.adapter = nowPlayingAdapter

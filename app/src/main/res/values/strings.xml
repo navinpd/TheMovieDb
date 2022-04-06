@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">MovieDb</string>
-    <string name="now_playing">Now Playing</string>
-    <string name="popular">Popular</string>
-    <string name="top_rated">Top Rated</string>
-    <string name="upcoming">Upcoming</string>
-    <string name="movie_detail">Movie Detail</string>
+    <string name="now_playing">NOW PLAYING</string>
+    <string name="popular">POPULAR</string>
+    <string name="top_rated">TOP RATED</string>
+    <string name="upcoming">UPCOMING</string>
+    <string name="movie_detail">MOVIE DETAIL</string>
 
 
     <string name="search_movies">Search Movies</string>
     <string name="no_data_searched">Click 🔍icon\nto download movies</string>
     <string name="language_hiphen">Language: -</string>
     <string name="genre_hyphen">Genre: -</string>
+    <string name="favourite_movies">FAVOURITE MOVIES</string>
+    <string name="search_movie_result">SEARCH MOVIE RESULT</string>
 </resources>

@@ -16,6 +16,8 @@ import com.api.moviedb.data.remote.model.genere.GeneresResponse
 import com.api.moviedb.databinding.ActivityMainBinding
 import com.api.moviedb.presentation.ui.favmovie.FavMovieListActivity
 import com.api.moviedb.presentation.ui.search.SearchMovieListActivity
+import com.api.moviedb.util.ConstData.Companion.genreMap
+import com.api.moviedb.util.GENRE_PREFERENCE_DATA
 import com.api.moviedb.util.SEARCH_QUERY_INTENT_EXTRA
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
@@ -37,27 +39,25 @@ class MainActivity : AppCompatActivity() {
         defaultViewModelProviderFactory
     }
 
-    var genreMap = HashMap<Int?, String?>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        if (!preferences.contains("GENRE")) {
+        if (!preferences.contains(GENRE_PREFERENCE_DATA)) {
             viewModel.genreState.observe(this) {
                 processGenre(it)
                 val data = gson.toJson(it)
-                Log.d("TAG", "gSON DATA $data")
-                preferences.edit().putString("GENRE", data).apply()
+                Log.d("TAG", "gson data: $data")
+                preferences.edit().putString(GENRE_PREFERENCE_DATA, data).apply()
             }
             viewModel.getGenre()
         } else {
-            val data = preferences.getString("GENRE", "")
+            val data = preferences.getString(GENRE_PREFERENCE_DATA, "")
             val response = gson.fromJson(data, GeneresResponse::class.java)
             processGenre(response)
         }
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.bookmark.setOnClickListener {
             val intent = Intent(this, FavMovieListActivity::class.java)

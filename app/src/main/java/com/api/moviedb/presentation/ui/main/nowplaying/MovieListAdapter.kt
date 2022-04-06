@@ -9,17 +9,16 @@ import com.api.common.toDateFormat
 import com.api.moviedb.R
 import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.databinding.AdapterMovieViewBinding
-import com.api.moviedb.presentation.ui.main.MainActivity
+import com.api.moviedb.util.ConstData.Companion.genreMap
 import com.api.moviedb.util.IMAGE_PATH_PREFIX
 import com.api.moviedb.util.INextPage
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
-import dagger.hilt.android.internal.managers.FragmentComponentManager
 
-class NowPlayingAdapter(
+class MovieListAdapter(
     private val listItem: List<Results>,
-    private val glide: RequestManager
-) : RecyclerView.Adapter<NowPlayingAdapter.ViewHolder>() {
+    private val glide: RequestManager,
+) : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 
     lateinit var requestForNextItem: INextPage
     lateinit var context: Context
@@ -57,14 +56,9 @@ class NowPlayingAdapter(
             it.voteCountTv.text = result.voteCount?.toCommaSeparate()
             var genre = ""
             result.genreIds.forEach { genreId ->
-                genre =
-                    if (genre.isEmpty())
-                        (FragmentComponentManager.findActivity(context) as MainActivity)
-                            .genreMap[genreId]!!
-                    else "$genre, " + (FragmentComponentManager.findActivity(context) as MainActivity)
-                        .genreMap[genreId]
+                genre = if (genre.isEmpty()) genreMap[genreId]!! else "$genre, " + genreMap[genreId]
             }
-            it.genreText.text = genre
+            it.genreText.text = if (genre.isEmpty()) "Genre: -" else "Genre: $genre"
             it.cardHolder.setOnClickListener {
                 requestForNextItem.getMovieDetails(result.id!!)
             }

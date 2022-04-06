@@ -18,6 +18,9 @@ class MovieListViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
 
+    var currentPage = 0
+    var totalPage = 1
+
     private val searchMovieMLD = MutableLiveData<SearchResultMovies>()
     val searchMovieData: LiveData<SearchResultMovies>
         get() = searchMovieMLD
@@ -26,17 +29,23 @@ class MovieListViewModel @Inject constructor(
     val loadingState: LiveData<ViewMovieState>
         get() = loadingMutableState
 
+    fun invokeNextPage(query: String) {
+        getSearchedResultMovies(query = query, page = currentPage + 1)
+    }
+
     fun getSearchedResultMovies(query: String, page: Int) {
-        mainUseCase.searchMovieUseCase
-            .run(SearchMovieData(query = query, page = page))
-            .subscribeOn(Schedulers.io())
-            .doOnSubscribe { showLoading() }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doAfterTerminate { hideLoading() }
-            .subscribe(
-                { onMovieSearchRetrieved(it) },
-                { onMovieFetchFailed(it) }
-            ).disposedBy(compositeDisposable = compositeDisposable)
+        if (page in (currentPage + 1)..totalPage) {
+            mainUseCase.searchMovieUseCase
+                .run(SearchMovieData(query = query, page = page))
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe { showLoading() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate { hideLoading() }
+                .subscribe(
+                    { onMovieSearchRetrieved(it) },
+                    { onMovieFetchFailed(it) }
+                ).disposedBy(compositeDisposable = compositeDisposable)
+        }
     }
 
     override fun showLoading() {
@@ -47,8 +56,13 @@ class MovieListViewModel @Inject constructor(
         loadingMutableState.postValue(ViewMovieState.HideLoading)
     }
 
-    private fun onMovieSearchRetrieved(movieDetail: SearchResultMovies) {
-        searchMovieMLD.value = movieDetail
+    private fun onMovieSearchRetrieved(searchMovies: SearchResultMovies) {
+        searchMovieMLD.value = searchMovies
+        if (currentPage != searchMovies.page) {
+            searchMovieMLD.value = searchMovies
+            currentPage = searchMovies.page!!
+            totalPage = searchMovies.totalPages!!
+        }
     }
 
     private fun onMovieFetchFailed(throwable: Throwable) {

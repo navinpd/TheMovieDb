@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.api.moviedb.R
 import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
 import com.api.moviedb.databinding.ActivityLikedMoviesBinding
 import com.api.moviedb.presentation.ui.moviedetail.MovieDetailActivity
@@ -38,6 +39,8 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
         val favList = mutableListOf<MovieDetail>()
         val adapter = FavMovieAdapter(favList, glide)
         adapter.requestForNextItem = this
+
+        binding.titleTv.text = getString(R.string.favourite_movies)
 
         val recyclerView = binding.likedMoviesRv
         recyclerView.adapter = adapter

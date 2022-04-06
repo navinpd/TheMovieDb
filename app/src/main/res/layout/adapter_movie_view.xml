@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/card_holder"
     android:layout_margin="@dimen/d2"
     android:elevation="@dimen/elevation_lvl3"
     android:maxHeight="320dp"
@@ -18,11 +19,11 @@
             android:id="@+id/title_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Title"
             android:textSize="@dimen/font_size_l"
             app:layout_constraintEnd_toStartOf="@id/rating_bar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/movie_image"
@@ -47,29 +48,29 @@
             android:id="@+id/vote_count_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(1,234)"
             android:textSize="@dimen/font_size_l"
             app:layout_constraintBottom_toBottomOf="@id/title_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/title_text" />
+            app:layout_constraintTop_toTopOf="@id/title_text"
+            tools:text="(1,234)" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/genre_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genre"
             android:textSize="@dimen/font_size_l"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movie_image" />
+            app:layout_constraintTop_toBottomOf="@id/movie_image"
+            tools:text="Genre" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Release Date"
             android:textSize="@dimen/font_size_l"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/genre_text" />
+            app:layout_constraintTop_toBottomOf="@id/genre_text"
+            tools:text="Release Date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
