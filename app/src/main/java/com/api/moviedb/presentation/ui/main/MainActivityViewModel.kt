@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(
+class MainActivityViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
 

@@ -1,7 +1,6 @@
 package com.api.moviedb.presentation.ui.favmovie
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -46,15 +45,16 @@ class FavMovieAdapter(
             val imagePostfix = result.backdropPath ?: result.posterPath
 
             glide.load(IMAGE_PATH_PREFIX + imagePostfix)
-                .error(com.google.android.material.R.drawable.mtrl_ic_error)
+                .error(R.drawable.ic_baseline_error_24)
                 .apply(options)
                 .placeholder(R.drawable.ic_baseline_downloading_24)
                 .into(it.movieImage)
             it.titleText.text = result.title
             it.ratingBar.rating = (result.voteAverage!!.div(2)).toFloat()
 
-            it.releaseDate.text = result.releaseDate?.toDateFormat()
+            it.releaseDate.text = context.getString(R.string.release_date, result.releaseDate?.toDateFormat())
             it.voteCountTv.text = result.voteCount?.toCommaSeparate()
+
             var genre = ""
             result.genres.forEach { genreId ->
                 genre =
@@ -62,7 +62,11 @@ class FavMovieAdapter(
                         genreId.name!!
                     else "$genre, " + genreId.name
             }
-            it.genreText.text = genre
+            it.genreText.text =
+                if (genre.isEmpty())
+                    context.getString(R.string.genre_hyphen)
+                else
+                    context.getString(R.string.genre_data, genre)
             it.cardHolder.setOnClickListener {
                 requestForNextItem.getMovieDetails(result.id!!)
             }

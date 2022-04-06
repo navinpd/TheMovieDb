@@ -35,14 +35,18 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var gson: Gson
 
-    private val viewModel by viewModels<MovieViewModel> {
+    private val viewModel by viewModels<MainActivityViewModel> {
         defaultViewModelProviderFactory
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!preferences.contains(GENRE_PREFERENCE_DATA)) {
+        if (preferences.contains(GENRE_PREFERENCE_DATA)) {
+            val data = preferences.getString(GENRE_PREFERENCE_DATA, "")
+            val response = gson.fromJson(data, GeneresResponse::class.java)
+            processGenre(response)
+        } else {
             viewModel.genreState.observe(this) {
                 processGenre(it)
                 val data = gson.toJson(it)
@@ -50,10 +54,6 @@ class MainActivity : AppCompatActivity() {
                 preferences.edit().putString(GENRE_PREFERENCE_DATA, data).apply()
             }
             viewModel.getGenre()
-        } else {
-            val data = preferences.getString(GENRE_PREFERENCE_DATA, "")
-            val response = gson.fromJson(data, GeneresResponse::class.java)
-            processGenre(response)
         }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -83,8 +83,6 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_now_playing,

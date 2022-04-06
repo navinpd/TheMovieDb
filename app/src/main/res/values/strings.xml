@@ -10,8 +10,14 @@
     <string name="search_movies">Search Movies</string>
     <string name="no_data_searched">🔍 No Movies Found</string>
     <string name="no_movie_liked">🔍 No Movies Liked</string>
-    <string name="language_hiphen">Language: -</string>
+    <string name="language_hyphen">Language: -</string>
+    <string name="language_data">Language: %1$s</string>
+    <string name="overview_text">Overview: %1$s</string>
+    <string name="tagline_text">Tagline: %1$s</string>
+    <string name="release_text">Release Status: %1$s</string>
     <string name="genre_hyphen">Genre: -</string>
+    <string name="genre_data">Genre: %1$s</string>
+    <string name="release_date">Release Date: %1$s</string>
     <string name="favourite_movies">FAVOURITE MOVIES</string>
     <string name="search_movie_result">SEARCH MOVIE RESULT</string>
     <string name="store_fav_movie">Favorite movie saved</string>

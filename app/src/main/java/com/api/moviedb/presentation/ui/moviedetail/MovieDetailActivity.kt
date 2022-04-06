@@ -45,26 +45,32 @@ class MovieDetailActivity : AppCompatActivity() {
 
         val options = RequestOptions().centerInside()
         viewModel.movieDetailState.observe(this) {
-            val imagePostfix = IMAGE_PATH_PREFIX + it.backdropPath ?: it.posterPath
+            val imagePostfix = it.backdropPath ?: it.posterPath
+            val imagePath = IMAGE_PATH_PREFIX + imagePostfix
 
-            binding.releaseDateTv.text = "Release Date: ${it.releaseDate.toDateFormat()}"
+            binding.releaseDateTv.text =
+                getString(R.string.release_date, it.releaseDate.toDateFormat())
 
-            binding.overviewTv.text = "Overview: ${it.overview}"
-            binding.tagLineTv.text = "Tagline: ${it.tagline}"
+            binding.overviewTv.text = getString(R.string.overview_text, it.overview)
+            binding.tagLineTv.text = getString(R.string.tagline_text, it.tagline)
             binding.titleTv.text = it.title
 
             binding.ratingBar.rating = (it.voteAverage!!.div(2)).toFloat()
             binding.voteCountTv.text = it.voteCount.toCommaSeparate()
-            binding.statusTv.text = "Release Status: ${it.status}"
+            binding.statusTv.text = getString(R.string.release_text, it.status)
 
             var genre = ""
             it.genres.forEach { genres ->
                 genre = if (genre.isEmpty()) genres.name!! else genre + ", " + genres.name
             }
 
-            binding.genreTv.text = if (genre.isEmpty()) getString(R.string.genre_hyphen) else "Genre: $genre"
-            glide.load(imagePostfix)
-                .error(com.google.android.material.R.drawable.mtrl_ic_error)
+            binding.genreTv.text =
+                if (genre.isEmpty()) getString(R.string.genre_hyphen) else getString(
+                    R.string.genre_data,
+                    genre
+                )
+            glide.load(imagePath)
+                .error(R.drawable.ic_baseline_error_24)
                 .apply(options)
                 .placeholder(R.drawable.ic_baseline_downloading_24)
                 .into(binding.backdropIv)
@@ -75,9 +81,13 @@ class MovieDetailActivity : AppCompatActivity() {
                     if (lang.isEmpty()) language.englishName!! else "$lang, ${language.englishName}"
 
             }
-            binding.spokenLanguageTv.text = if (lang.isEmpty()) getString(R.string.language_hiphen) else "Language: $lang"
+            binding.spokenLanguageTv.text =
+                if (lang.isEmpty()) getString(R.string.language_hyphen) else getString(
+                    R.string.language_data,
+                    lang
+                )
 
-            if(fromFavMovie) {
+            if (fromFavMovie) {
                 saveToLocal = false
                 binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_white_24)
             }
@@ -85,18 +95,20 @@ class MovieDetailActivity : AppCompatActivity() {
             binding.markFavIv.setOnClickListener { _ ->
                 if (saveToLocal) {
                     viewModel.storeFavMovie(it)
-                    Toast.makeText(this, getString(R.string.store_fav_movie), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.store_fav_movie), Toast.LENGTH_SHORT)
+                        .show()
                     binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_white_24)
                 } else {
                     viewModel.removeFavMovie(it.id!!)
                     binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_color_24)
-                    Toast.makeText(this, getString(R.string.removed_fav_movie), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.removed_fav_movie), Toast.LENGTH_SHORT)
+                        .show()
                 }
                 saveToLocal = !saveToLocal
             }
         }
 
-        if(fromFavMovie) {
+        if (fromFavMovie) {
             viewModel.getFavMovieFromLocal(movieId)
         } else {
             viewModel.getMovieDetails(movieId)
