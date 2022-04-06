@@ -30,7 +30,7 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
         defaultViewModelProviderFactory
     }
 
-    var currentDataSize = 0
+    private var currentDataSize = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

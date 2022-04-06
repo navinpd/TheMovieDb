@@ -30,7 +30,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/liked_movies_rv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/d0"
         android:layout_marginTop="@dimen/d1"
         android:paddingTop="@dimen/d1"
         app:layout_constraintBottom_toBottomOf="parent"

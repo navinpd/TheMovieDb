@@ -47,7 +47,7 @@ class SearchMovieListActivity : AppCompatActivity(), INextPage {
         searchRv.layoutManager = LinearLayoutManager(this)
 
         viewModel.searchMovieData.observe(this) {
-            val size = searchResult.size
+            val size = it.results.size
             Log.d("TAG", "Data size is $size")
             if (size == 0) {
                 binding.noSearchResult.visibility = View.VISIBLE

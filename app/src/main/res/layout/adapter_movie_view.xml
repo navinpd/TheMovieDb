@@ -17,7 +17,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title_text"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/d0"
             android:layout_height="wrap_content"
             android:textSize="@dimen/font_size_l"
             app:layout_constraintEnd_toStartOf="@id/rating_bar"

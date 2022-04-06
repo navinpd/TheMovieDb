@@ -32,7 +32,6 @@ class FavMovieListViewModel @Inject constructor(
         get() = loadingMutableState
 
     fun getFavMovieList() {
-        Log.d("TAG", "Invoked for fav movie lists")
         Observable.defer {
             mainUseCase.favMoviesListGetUseCase
                 .run()
