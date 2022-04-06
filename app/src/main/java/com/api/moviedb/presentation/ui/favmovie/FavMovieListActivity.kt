@@ -61,6 +61,9 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
                     binding.likedMoviesRv.visibility = View.GONE
                     binding.noSearchResult.visibility = View.VISIBLE
                 }
+            } else if (it.size == 0) {
+                binding.likedMoviesRv.visibility = View.GONE
+                binding.noSearchResult.visibility = View.VISIBLE
             }
         }
 
