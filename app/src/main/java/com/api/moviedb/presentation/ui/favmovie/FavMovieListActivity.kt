@@ -3,6 +3,7 @@ package com.api.moviedb.presentation.ui.favmovie
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,8 +48,15 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         viewModel.movieListLD.observe(this) {
-            favList.addAll(it)
-            adapter.notifyItemRangeChanged(0, it.size)
+            if (it.size > 0) {
+                favList.addAll(it)
+                adapter.notifyItemRangeChanged(0, it.size)
+                binding.likedMoviesRv.visibility = View.VISIBLE
+                binding.noSearchResult.visibility = View.GONE
+            } else {
+                binding.likedMoviesRv.visibility = View.GONE
+                binding.noSearchResult.visibility = View.VISIBLE
+            }
         }
 
         viewModel.getFavMovieList()

@@ -11,7 +11,6 @@ import com.api.moviedb.R
 import com.api.moviedb.databinding.ActivityMovieDetailBinding
 import com.api.moviedb.util.FAV_MOVIE_INTENT_EXTRA
 import com.api.moviedb.util.IMAGE_PATH_PREFIX
-import com.api.moviedb.util.LIKE_MOVIE_INTENT_EXTRA
 import com.api.moviedb.util.MOVIE_ID_INTENT_EXTRA
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
@@ -27,7 +26,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private var _binding: ActivityMovieDetailBinding? = null
     private val binding get() = _binding!!
     private var movieId = 0
-    private var canLike = true
+    private var saveToLocal = true
     private var fromFavMovie = false
 
     private val viewModel by viewModels<MovieDetailViewModel> {
@@ -40,14 +39,12 @@ class MovieDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         movieId = intent.getIntExtra(MOVIE_ID_INTENT_EXTRA, 0)
-        canLike = intent.getBooleanExtra(LIKE_MOVIE_INTENT_EXTRA, true)
         fromFavMovie = intent.getBooleanExtra(FAV_MOVIE_INTENT_EXTRA, false)
 
         Log.d("TAG", "MovieId is $movieId")
 
         val options = RequestOptions().centerInside()
         viewModel.movieDetailState.observe(this) {
-            Log.d("TAG", "Movie Details are $it")
             val imagePostfix = IMAGE_PATH_PREFIX + it.backdropPath ?: it.posterPath
 
             binding.releaseDateTv.text = "Release Date: ${it.releaseDate.toDateFormat()}"
@@ -80,17 +77,22 @@ class MovieDetailActivity : AppCompatActivity() {
             }
             binding.spokenLanguageTv.text = if (lang.isEmpty()) getString(R.string.language_hiphen) else "Language: $lang"
 
+            if(fromFavMovie) {
+                saveToLocal = false
+                binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_white_24)
+            }
+
             binding.markFavIv.setOnClickListener { _ ->
-                if (canLike) {
+                if (saveToLocal) {
                     viewModel.storeFavMovie(it)
-                    Toast.makeText(this, "Favorite movie saved", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.store_fav_movie), Toast.LENGTH_SHORT).show()
                     binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_white_24)
                 } else {
                     viewModel.removeFavMovie(it.id!!)
                     binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_color_24)
-                    Toast.makeText(this, "Favorite movie removed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.removed_fav_movie), Toast.LENGTH_SHORT).show()
                 }
-                canLike = !canLike
+                saveToLocal = !saveToLocal
             }
         }
 

@@ -8,9 +8,12 @@
 
 
     <string name="search_movies">Search Movies</string>
-    <string name="no_data_searched">Click 🔍icon\nto download movies</string>
+    <string name="no_data_searched">🔍 No Movies Found</string>
+    <string name="no_movie_liked">🔍 No Movies Liked</string>
     <string name="language_hiphen">Language: -</string>
     <string name="genre_hyphen">Genre: -</string>
     <string name="favourite_movies">FAVOURITE MOVIES</string>
     <string name="search_movie_result">SEARCH MOVIE RESULT</string>
+    <string name="store_fav_movie">Favorite movie saved</string>
+    <string name="removed_fav_movie">Favorite movie removed</string>
 </resources>

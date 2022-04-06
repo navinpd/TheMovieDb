@@ -2,6 +2,8 @@ package com.api.moviedb.presentation.ui.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,22 +34,30 @@ class SearchMovieListActivity : AppCompatActivity(), INextPage {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        query = intent.getStringExtra(SEARCH_QUERY_INTENT_EXTRA)?: ""
+        query = intent.getStringExtra(SEARCH_QUERY_INTENT_EXTRA) ?: ""
         binding = ActivitySearchMoviesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.titleTv.text = getString(R.string.search_movie_result)
         val searchRv = binding.nowPlayingRv
-        val nowPlayingList = mutableListOf<Results>()
-        val adapter = MovieListAdapter(nowPlayingList, glide)
+        val searchResult = mutableListOf<Results>()
+        val adapter = MovieListAdapter(searchResult, glide)
         adapter.requestForNextItem = this
         searchRv.adapter = adapter
         searchRv.layoutManager = LinearLayoutManager(this)
 
         viewModel.searchMovieData.observe(this) {
-            val size = nowPlayingList.size
-            nowPlayingList.addAll(it.results)
-            adapter.notifyItemRangeChanged(size, size + it.results.size)
+            val size = searchResult.size
+            Log.d("TAG", "Data size is $size")
+            if (size == 0) {
+                binding.noSearchResult.visibility = View.VISIBLE
+                binding.nowPlayingRv.visibility = View.GONE
+            } else {
+                binding.noSearchResult.visibility = View.GONE
+                binding.nowPlayingRv.visibility = View.VISIBLE
+                searchResult.addAll(it.results)
+                adapter.notifyItemRangeChanged(size, size + it.results.size)
+            }
         }
         viewModel.getSearchedResultMovies(query, 1)
     }

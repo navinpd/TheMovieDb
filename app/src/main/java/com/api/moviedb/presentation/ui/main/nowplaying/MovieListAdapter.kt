@@ -58,7 +58,7 @@ class MovieListAdapter(
             result.genreIds.forEach { genreId ->
                 genre = if (genre.isEmpty()) genreMap[genreId]!! else "$genre, " + genreMap[genreId]
             }
-            it.genreText.text = if (genre.isEmpty()) "Genre: -" else "Genre: $genre"
+            it.genreText.text = if (genre.isEmpty()) context.getString(R.string.genre_hyphen) else "Genre: $genre"
             it.cardHolder.setOnClickListener {
                 requestForNextItem.getMovieDetails(result.id!!)
             }
