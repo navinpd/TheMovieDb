@@ -30,6 +30,8 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
         defaultViewModelProviderFactory
     }
 
+    var currentDataSize = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("TAG", "FavMovieListActivity")
@@ -48,17 +50,24 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         viewModel.movieListLD.observe(this) {
-            if (it.size > 0) {
-                favList.addAll(it)
-                adapter.notifyItemRangeChanged(0, it.size)
-                binding.likedMoviesRv.visibility = View.VISIBLE
-                binding.noSearchResult.visibility = View.GONE
-            } else {
-                binding.likedMoviesRv.visibility = View.GONE
-                binding.noSearchResult.visibility = View.VISIBLE
+            if (it.size != currentDataSize) {
+                if (it.size > 0) {
+                    favList.clear()
+                    favList.addAll(it)
+                    adapter.notifyDataSetChanged()
+                    binding.likedMoviesRv.visibility = View.VISIBLE
+                    binding.noSearchResult.visibility = View.GONE
+                } else {
+                    binding.likedMoviesRv.visibility = View.GONE
+                    binding.noSearchResult.visibility = View.VISIBLE
+                }
             }
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
         viewModel.getFavMovieList()
     }
 
