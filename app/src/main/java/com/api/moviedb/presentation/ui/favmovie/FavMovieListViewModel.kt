@@ -42,13 +42,12 @@ class FavMovieListViewModel @Inject constructor(
     }
 
     private fun onMovieDetailRetrieved(movieDetail: ArrayList<MovieDetail>) {
-        Log.d("TAG", "Got fav movies ")
         movieListMLiveData.value = movieDetail
     }
 
     private fun onMovieFetchFailed(throwable: Throwable) {
-        Log.e("TAG", throwable.message.toString())
-        loadingMutableState.postValue(ViewMovieState.ShowError)
+        Log.e("TAG", throwable.message ?: "")
+        loadingMutableState.value = ViewMovieState.ShowError(throwable.message?:"")
     }
 
     override fun showLoading() {

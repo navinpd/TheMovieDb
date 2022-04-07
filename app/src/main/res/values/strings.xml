@@ -8,7 +8,7 @@
 
 
     <string name="search_movies">Search Movies</string>
-    <string name="no_data_searched">🔍 No Movies Found</string>
+    <string name="no_data_found">🔍 No Movies Found</string>
     <string name="no_movie_liked">🔍 No Movies Liked</string>
     <string name="language_hyphen">Language: -</string>
     <string name="language_data">Language: %1$s</string>

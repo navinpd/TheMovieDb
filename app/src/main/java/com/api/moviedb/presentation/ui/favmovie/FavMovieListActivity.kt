@@ -71,7 +71,8 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
         viewModel.loadingState.observe(this) {
             when (it) {
                 is ViewMovieState.ShowError -> {
-
+                    binding.noSearchResult.visibility = View.VISIBLE
+                    binding.noSearchResult.text = it.message
                 }
 
                 is ViewMovieState.HideLoading -> {
@@ -79,6 +80,7 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
                 }
 
                 is ViewMovieState.ShowLoading -> {
+                    binding.noSearchResult.text = getString(R.string.no_data_found)
                     binding.progressBar.visibility = View.VISIBLE
                 }
             }

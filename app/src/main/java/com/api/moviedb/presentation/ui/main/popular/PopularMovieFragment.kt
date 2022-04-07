@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.api.moviedb.R
 import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.databinding.FragmentPopularBinding
 import com.api.moviedb.presentation.ui.main.nowplaying.MovieListAdapter
@@ -59,7 +60,8 @@ class PopularMovieFragment : Fragment(), INextPage {
         viewModel.loadingState.observe(viewLifecycleOwner) {
             when (it) {
                 is ViewMovieState.ShowError -> {
-
+                    binding.errorMessage.visibility = View.VISIBLE
+                    binding.errorMessage.text = it.message
                 }
 
                 is ViewMovieState.HideLoading -> {
@@ -67,6 +69,8 @@ class PopularMovieFragment : Fragment(), INextPage {
                 }
 
                 is ViewMovieState.ShowLoading -> {
+                    binding.errorMessage.text = getString(R.string.no_data_found)
+                    binding.errorMessage.visibility = View.GONE
                     binding.progressBar.visibility = View.VISIBLE
                 }
             }

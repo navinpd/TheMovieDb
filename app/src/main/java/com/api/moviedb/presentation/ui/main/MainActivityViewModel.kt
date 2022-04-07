@@ -23,6 +23,8 @@ class MainActivityViewModel @Inject constructor(
         get() = genreData
 
     private val loadingMutableState = MutableLiveData<ViewMovieState>()
+    val loadingLiveData : LiveData<ViewMovieState>
+        get() = loadingMutableState
 
     fun getGenre() {
         mainUseCase.genreUseCase
@@ -50,6 +52,6 @@ class MainActivityViewModel @Inject constructor(
     }
 
     private fun onGenreFetchFailed(throwable: Throwable) {
-        loadingMutableState.postValue(ViewMovieState.ShowError)
+        loadingMutableState.value = ViewMovieState.ShowError(throwable.message?:"")
     }
 }

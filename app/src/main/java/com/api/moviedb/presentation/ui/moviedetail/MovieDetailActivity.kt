@@ -81,7 +81,8 @@ class MovieDetailActivity : AppCompatActivity() {
         viewModel.loadingState.observe(this) {
             when (it) {
                 is ViewMovieState.ShowError -> {
-
+                    binding.errorMessage.visibility = View.VISIBLE
+                    binding.errorMessage.text = it.message
                 }
 
                 is ViewMovieState.HideLoading -> {
@@ -89,6 +90,8 @@ class MovieDetailActivity : AppCompatActivity() {
                 }
 
                 is ViewMovieState.ShowLoading -> {
+                    binding.errorMessage.text = getString(R.string.no_data_found)
+                    binding.errorMessage.visibility = View.GONE
                     binding.progressBar.visibility = View.VISIBLE
                 }
             }

@@ -1,5 +1,6 @@
 package com.api.moviedb.presentation.ui.main.nowplaying
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
@@ -64,6 +65,7 @@ class NowPlayingViewModel @Inject constructor(
     }
 
     private fun onMovieFetchFailed(throwable: Throwable) {
-        loadingMutableState.postValue(ViewMovieState.ShowError)
+        Log.e("TAG-NowPlaying", throwable.message ?: "")
+        loadingMutableState.value = ViewMovieState.ShowError(throwable.message ?: "")
     }
 }

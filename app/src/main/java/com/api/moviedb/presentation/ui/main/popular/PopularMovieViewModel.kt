@@ -1,5 +1,6 @@
 package com.api.moviedb.presentation.ui.main.popular
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
@@ -65,6 +66,7 @@ class PopularMovieViewModel @Inject constructor(
     }
 
     private fun onMovieFetchFailed(throwable: Throwable) {
-        loadingMutableState.postValue(ViewMovieState.ShowError)
+        Log.e("TAG", throwable.message ?: "")
+        loadingMutableState.value = ViewMovieState.ShowError(throwable.message?:"")
     }
 }

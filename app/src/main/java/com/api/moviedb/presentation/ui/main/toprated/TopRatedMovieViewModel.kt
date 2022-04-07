@@ -1,5 +1,6 @@
 package com.api.moviedb.presentation.ui.main.toprated
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
@@ -14,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class TopRatedMovieViewModel  @Inject constructor(
+class TopRatedMovieViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
 
@@ -65,6 +66,7 @@ class TopRatedMovieViewModel  @Inject constructor(
     }
 
     private fun onMovieFetchFailed(throwable: Throwable) {
-        loadingMutableState.postValue(ViewMovieState.ShowError)
+        Log.e("TAG-TopRated", throwable.message!!)
+        loadingMutableState.value = ViewMovieState.ShowError(throwable.message ?: "")
     }
 }

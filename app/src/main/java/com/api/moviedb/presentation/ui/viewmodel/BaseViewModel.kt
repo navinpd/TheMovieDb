@@ -21,5 +21,5 @@ abstract class BaseViewModel : ViewModel() {
 sealed class ViewMovieState {
     object ShowLoading : ViewMovieState()
     object HideLoading : ViewMovieState()
-    object ShowError : ViewMovieState()
+    data class ShowError(var message: String) : ViewMovieState()
 }

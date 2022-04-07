@@ -52,6 +52,7 @@ class SearchMovieListActivity : AppCompatActivity(), INextPage {
             Log.d("TAG", "Data size is $size")
             if (size == 0) {
                 binding.noSearchResult.visibility = View.VISIBLE
+                binding.noSearchResult.text = getString(R.string.no_data_found)
                 binding.nowPlayingRv.visibility = View.GONE
             } else {
                 binding.noSearchResult.visibility = View.GONE
@@ -64,7 +65,8 @@ class SearchMovieListActivity : AppCompatActivity(), INextPage {
         viewModel.loadingState.observe(this) {
             when (it) {
                 is ViewMovieState.ShowError -> {
-
+                    binding.noSearchResult.visibility = View.VISIBLE
+                    binding.noSearchResult.text = it.message
                 }
 
                 is ViewMovieState.HideLoading -> {
@@ -72,6 +74,8 @@ class SearchMovieListActivity : AppCompatActivity(), INextPage {
                 }
 
                 is ViewMovieState.ShowLoading -> {
+                    binding.noSearchResult.text = getString(R.string.no_data_found)
+                    binding.noSearchResult.visibility
                     binding.progressBar.visibility = View.VISIBLE
                 }
             }

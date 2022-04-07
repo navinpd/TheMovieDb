@@ -14,6 +14,10 @@ import com.api.moviedb.util.IMAGE_PATH_PREFIX
 import com.api.moviedb.util.INextPage
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newFixedThreadPoolContext
+import kotlinx.coroutines.runBlocking
 
 class MovieListAdapter(
     private val listItem: List<Results>,
@@ -67,7 +71,7 @@ class MovieListAdapter(
     private fun getGenre(data: ArrayList<Int>): String {
         var genre = ""
         data.forEach { genreId ->
-            genre = if (genre.isEmpty()) genreMap[genreId]!! else "$genre, " + genreMap[genreId]
+            genre = if (genre.isEmpty()) genreMap[genreId]?:"" else "$genre, " + genreMap[genreId]
         }
         if (genre.isEmpty()) context.getString(R.string.genre_hyphen) else context.getString(
             R.string.genre_data,

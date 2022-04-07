@@ -24,10 +24,6 @@ class MovieDetailViewModel @Inject constructor(
     val movieDetailState: LiveData<MovieDetail>
         get() = movieDetailData
 
-    private val storeFavMovieSuccessful = MutableLiveData<Boolean>()
-    val movieStoreStat: LiveData<Boolean>
-        get() = storeFavMovieSuccessful
-
     private val loadingMutableState = MutableLiveData<ViewMovieState>()
     val loadingState: LiveData<ViewMovieState>
         get() = loadingMutableState
@@ -67,10 +63,8 @@ class MovieDetailViewModel @Inject constructor(
             .doOnSubscribe { showLoading() }
             .observeOn(AndroidSchedulers.mainThread())
             .doAfterTerminate { hideLoading() }
-            .subscribe(
-                { favMovieStored(it) },
-                { movieStoreFailed() }
-            ).disposedBy(compositeDisposable)
+            .subscribe()
+            .disposedBy(compositeDisposable)
     }
 
     fun removeFavMovie(moveId: Int) {
@@ -81,10 +75,8 @@ class MovieDetailViewModel @Inject constructor(
             .doOnSubscribe { showLoading() }
             .observeOn(AndroidSchedulers.mainThread())
             .doAfterTerminate { hideLoading() }
-            .subscribe(
-                { favMovieStored(it) },
-                { movieStoreFailed() }
-            ).disposedBy(compositeDisposable)
+            .subscribe()
+            .disposedBy(compositeDisposable)
     }
 
     override fun showLoading() {
@@ -99,16 +91,8 @@ class MovieDetailViewModel @Inject constructor(
         movieDetailData.value = movieDetail
     }
 
-    private fun favMovieStored(state: Boolean) {
-        storeFavMovieSuccessful.value = state
-    }
-
-    private fun movieStoreFailed() {
-        storeFavMovieSuccessful.value = false
-    }
-
     private fun onMovieFetchFailed(throwable: Throwable) {
         Log.e("TAG", throwable.message.toString())
-        loadingMutableState.postValue(ViewMovieState.ShowError)
+        loadingMutableState.value = ViewMovieState.ShowError(throwable.message?:"")
     }
 }
