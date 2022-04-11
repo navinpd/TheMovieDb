@@ -11,9 +11,8 @@ class FavMovieStoreUseCase @Inject constructor(private val movieRepository: Movi
 
     override fun run(params: MovieDetail?): Observable<Boolean> {
         checkNotNull(params) { "The MovieDetail param can not be null" }
-        movieRepository
+        return movieRepository
             .storeFavMovies(params)
-
-        return Observable.just(true)
+            .toObservable()
     }
 }

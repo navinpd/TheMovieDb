@@ -24,39 +24,35 @@ class MovieListEntityToMovieListDataMapper @Inject constructor() :
     lateinit var belongsCollectionEntityToDataMapper: BelongsCollectionEntityToDataMapper
 
     override fun map(t: Array<MovieDetailEntity>): ArrayList<MovieDetail> {
-        val movieDetails = arrayListOf<MovieDetail>()
-        for (md in t) {
-            val movieDetail =
-                MovieDetail(
-                    id = md.id,
-                    voteCount = md.voteCount,
-                    voteAverage = md.voteAverage,
-                    video = md.video,
-                    title = md.title,
-                    tagline = md.tagline,
-                    status = md.status,
-                    runtime = md.runtime,
-                    revenue = md.revenue,
-                    releaseDate = md.releaseDate,
-                    genres = genreEntityToDataMapper.map(md.genres),
-                    spokenLanguages = spokenLangEntityToDataMapper.map(md.spokenLanguages),
-                    productionCountries = prodCountryEntityToDataMapper.map(md.productionCountries),
-                    productionCompanies = prodCompEntityToDataMapper.map(md.productionCompanies),
-                    posterPath = md.posterPath,
-                    popularity = md.popularity,
-                    overview = md.overview,
-                    originalTitle = md.originalTitle,
-                    originalLanguage = md.originalLanguage,
-                    imdbId = md.imdbId,
-                    homepage = md.homepage,
-                    budget = md.budget,
-                    belongsToCollection = belongsCollectionEntityToDataMapper.map(md.belongsToCollection),
-                    adult = md.adult,
-                    backdropPath = md.backdropPath
-                )
-            movieDetails.add(movieDetail)
-        }
-        return movieDetails
+        return ArrayList(t.map {
+            MovieDetail(
+                id = it.id,
+                voteCount = it.voteCount,
+                voteAverage = it.voteAverage,
+                video = it.video,
+                title = it.title,
+                tagline = it.tagline,
+                status = it.status,
+                runtime = it.runtime,
+                revenue = it.revenue,
+                releaseDate = it.releaseDate,
+                genres = genreEntityToDataMapper.map(it.genres),
+                spokenLanguages = spokenLangEntityToDataMapper.map(it.spokenLanguages),
+                productionCountries = prodCountryEntityToDataMapper.map(it.productionCountries),
+                productionCompanies = prodCompEntityToDataMapper.map(it.productionCompanies),
+                posterPath = it.posterPath,
+                popularity = it.popularity,
+                overview = it.overview,
+                originalTitle = it.originalTitle,
+                originalLanguage = it.originalLanguage,
+                imdbId = it.imdbId,
+                homepage = it.homepage,
+                budget = it.budget,
+                belongsToCollection = belongsCollectionEntityToDataMapper.map(it.belongsToCollection),
+                adult = it.adult,
+                backdropPath = it.backdropPath
+            )
+        })
     }
 
 }

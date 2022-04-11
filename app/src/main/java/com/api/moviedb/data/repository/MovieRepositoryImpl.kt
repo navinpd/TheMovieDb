@@ -14,6 +14,7 @@ import com.api.moviedb.data.remote.model.searchmovie.SearchResultMovies
 import com.api.moviedb.data.remote.model.toprated.TopRatedMovies
 import com.api.moviedb.data.remote.model.upcoming.UpcomingMovies
 import com.api.moviedb.domain.repository.MovieRepository
+import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -67,13 +68,13 @@ class MovieRepositoryImpl @Inject constructor(
         return Observable.just(movieDetail)
     }
 
-    override fun storeFavMovies(md: MovieDetail) {
+    override fun storeFavMovies(md: MovieDetail) : Completable {
         val movieDetailEntity = movieDataToEntityMapper.map(md)
-        dbApi.insertMovie(movieDetailEntity)
+        return dbApi.insertMovie(movieDetailEntity)
     }
 
-    override fun deleteFavMovie(movieId: Int) {
-        dbApi.deleteMovieById(movieId)
+    override fun deleteFavMovie(movieId: Int) : Completable {
+        return dbApi.deleteMovieById(movieId)
     }
 
     override fun getFavMovie(movieId: Int): Observable<MovieDetail> {

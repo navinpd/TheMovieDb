@@ -7,6 +7,7 @@ import com.api.moviedb.data.remote.model.popular.PopularMovie
 import com.api.moviedb.data.remote.model.searchmovie.SearchResultMovies
 import com.api.moviedb.data.remote.model.toprated.TopRatedMovies
 import com.api.moviedb.data.remote.model.upcoming.UpcomingMovies
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 interface MovieRepository {
@@ -40,9 +41,9 @@ interface MovieRepository {
 
     fun getFavMovies() : Observable<ArrayList<MovieDetail>>
 
-    fun storeFavMovies(md: MovieDetail)
+    fun storeFavMovies(md: MovieDetail) : Completable
 
-    fun deleteFavMovie(movieId: Int)
+    fun deleteFavMovie(movieId: Int) : Completable
 
     fun getFavMovie(movieId: Int) : Observable<MovieDetail>
 }

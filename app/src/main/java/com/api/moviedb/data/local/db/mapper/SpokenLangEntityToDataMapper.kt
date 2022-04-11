@@ -9,19 +9,13 @@ class SpokenLangEntityToDataMapper @Inject constructor() :
     Mapper<ArrayList<SpokenLanguagesData>, ArrayList<SpokenLanguages>> {
 
     override fun map(t: ArrayList<SpokenLanguagesData>): ArrayList<SpokenLanguages> {
-        val solution = arrayListOf<SpokenLanguages>()
-
-        for (sol in t) {
-            solution.add(
-                SpokenLanguages(
-                    iso6391 = sol.iso6391,
-                    englishName = sol.englishName,
-                    name = sol.name
-                )
+        return ArrayList(t.map {
+            SpokenLanguages(
+                iso6391 = it.iso6391,
+                englishName = it.englishName,
+                name = it.name
             )
-        }
-
-        return solution
+        })
     }
 
 }

@@ -11,8 +11,9 @@ class FavMovieDeleteUseCase @Inject constructor(private val movieRepository: Mov
     override fun run(params: Int?): Observable<Boolean> {
         checkNotNull(params) { "MovieId data can not be null" }
 
-        movieRepository.deleteFavMovie(params)
-        return Observable.just(true)
+        return movieRepository
+            .deleteFavMovie(params)
+            .toObservable()
     }
 
 }

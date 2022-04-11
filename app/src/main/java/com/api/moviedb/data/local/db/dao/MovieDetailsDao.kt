@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.api.moviedb.data.local.model.movieDetails.MovieDetailEntity
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 @Dao
@@ -13,10 +14,10 @@ interface MovieDetailsDao {
     fun getAllLikedMovies(): Observable<Array<MovieDetailEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertMovie(movieDetail: MovieDetailEntity)
+    fun insertMovie(movieDetail: MovieDetailEntity) : Completable
 
     @Query("DELETE FROM Movie_Detail WHERE id = :id")
-    fun deleteMovieById(id: Int)
+    fun deleteMovieById(id: Int) : Completable
 
     @Query("SELECT * FROM Movie_Detail WHERE id = :id")
     fun getFavMovie(id: Int): Observable<MovieDetailEntity>

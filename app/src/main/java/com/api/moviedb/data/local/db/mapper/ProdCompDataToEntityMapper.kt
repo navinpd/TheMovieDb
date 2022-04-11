@@ -7,20 +7,16 @@ import javax.inject.Inject
 
 class ProdCompDataToEntityMapper @Inject constructor() :
     Mapper<ArrayList<ProductionCompanies>, ArrayList<ProductionCompaniesData>> {
+
     override fun map(t: ArrayList<ProductionCompanies>): ArrayList<ProductionCompaniesData> {
-        val solution = arrayListOf<ProductionCompaniesData>()
 
-        for (prod in t) {
-            solution.add(
-                ProductionCompaniesData(
-                    id = prod.id ?: 0,
-                    logoPath = prod.logoPath ?: "",
-                    name = prod.name ?: "",
-                    originCountry = prod.originCountry ?: ""
-                )
+        return ArrayList(t.map {
+            ProductionCompaniesData(
+                id = it.id ?: 0,
+                logoPath = it.logoPath ?: "",
+                name = it.name ?: "",
+                originCountry = it.originCountry ?: ""
             )
-        }
-
-        return solution
+        })
     }
 }

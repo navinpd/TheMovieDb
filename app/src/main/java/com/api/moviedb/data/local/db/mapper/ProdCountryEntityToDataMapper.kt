@@ -9,17 +9,13 @@ class ProdCountryEntityToDataMapper @Inject constructor() :
     Mapper<ArrayList<ProductionCountriesData>, ArrayList<ProductionCountries>> {
 
     override fun map(t: ArrayList<ProductionCountriesData>): ArrayList<ProductionCountries> {
-        val solution = arrayListOf<ProductionCountries>()
-
-        for (sol in t) {
-            solution.add(
+        return ArrayList(
+            t.map {
                 ProductionCountries(
-                    iso31661 = sol.iso31661,
-                    name = sol.name
+                    iso31661 = it.iso31661,
+                    name = it.name
                 )
-            )
-        }
-
-        return solution
+            }
+        )
     }
 }

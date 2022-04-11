@@ -7,13 +7,8 @@ import javax.inject.Inject
 
 class GenreEntityToDataMapper @Inject constructor() : Mapper<ArrayList<GenreData>, ArrayList<Genres>> {
     override fun map(t: ArrayList<GenreData>): ArrayList<Genres> {
-        val solution = arrayListOf<Genres>()
 
-        for (genreData in t) {
-            solution.add(Genres(genreData.id, genreData.name))
-        }
-
-        return solution
+        return ArrayList(t.map { Genres(it.id, it.name) })
     }
 
 }
