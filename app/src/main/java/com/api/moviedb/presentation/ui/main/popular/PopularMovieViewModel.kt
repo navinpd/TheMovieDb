@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
+import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.data.remote.model.popular.PopularMovie
 import com.api.moviedb.domain.model.PageNumberData
 import com.api.moviedb.domain.usecase.MainUseCase
@@ -19,11 +20,13 @@ class PopularMovieViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
 
-    var currentPage = 0
-    var totalPage = 1
+    private var currentPage = 0
+    private var totalPage = 1
 
-    private val popularMovieLiveData = MutableLiveData<PopularMovie>()
-    val popularMovieData: LiveData<PopularMovie>
+    private var popularMovieList = arrayListOf<Results>()
+
+    private val popularMovieLiveData = MutableLiveData<ArrayList<Results>>()
+    val popularMovieData: LiveData<ArrayList<Results>>
         get() = popularMovieLiveData
 
     private val loadingMutableState = MutableLiveData<ViewMovieState>()
@@ -59,7 +62,8 @@ class PopularMovieViewModel @Inject constructor(
 
     private fun onPopularMovieRetrieved(popularMovies: PopularMovie) {
         if (currentPage != popularMovies.page) {
-            popularMovieLiveData.value = popularMovies
+            popularMovieList = ArrayList(popularMovieList + popularMovies.results)
+            popularMovieLiveData.value = popularMovieList
             currentPage = popularMovies.page!!
             totalPage = popularMovies.totalPages!!
         }

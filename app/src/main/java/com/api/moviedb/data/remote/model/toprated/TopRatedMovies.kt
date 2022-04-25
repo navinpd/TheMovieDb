@@ -1,5 +1,6 @@
 package com.api.moviedb.data.remote.model.toprated
 
+import com.api.moviedb.data.remote.model.BaseMovies
 import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.google.gson.annotations.SerializedName
 
@@ -7,12 +8,15 @@ import com.google.gson.annotations.SerializedName
 data class TopRatedMovies(
 
     @SerializedName("page")
-    var page: Int? = null,
+    override var page: Int? = null,
+    
     @SerializedName("results")
-    var results: ArrayList<Results> = arrayListOf(),
-    @SerializedName("total_pages")
-    var totalPages: Int? = null,
-    @SerializedName("total_results")
-    var totalResults: Int? = null
+    override var results: ArrayList<Results> = arrayListOf(),
 
-)
+    @SerializedName("total_pages")
+    override var totalPages: Int? = null,
+
+    @SerializedName("total_results")
+    override var totalResults: Int? = null
+
+) : BaseMovies()

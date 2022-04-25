@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
+import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.data.remote.model.upcoming.UpcomingMovies
 import com.api.moviedb.domain.model.PageNumberData
 import com.api.moviedb.domain.usecase.MainUseCase
@@ -19,11 +20,13 @@ class UpcomingMovieViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel()  {
 
-    var currentPage = 0
-    var totalPage = 1
+    private var currentPage = 0
+    private var totalPage = 1
 
-    private val upcomingMovieLiveData = MutableLiveData<UpcomingMovies>()
-    val upcomingMoviesMovieData: LiveData<UpcomingMovies>
+    private var upcomingMoviesList = arrayListOf<Results>()
+
+    private val upcomingMovieLiveData = MutableLiveData<ArrayList<Results>>()
+    val upcomingMoviesMovieData: LiveData<ArrayList<Results>>
         get() = upcomingMovieLiveData
 
     private val loadingMutableState = MutableLiveData<ViewMovieState>()
@@ -59,7 +62,8 @@ class UpcomingMovieViewModel @Inject constructor(
 
     private fun upcomingMoviesRetrieved(upcomingMovies: UpcomingMovies) {
         if (currentPage != upcomingMovies.page) {
-            upcomingMovieLiveData.value = upcomingMovies
+            upcomingMoviesList = ArrayList(upcomingMoviesList + upcomingMovies.results)
+            upcomingMovieLiveData.value = upcomingMoviesList
             currentPage = upcomingMovies.page!!
             totalPage = upcomingMovies.totalPages!!
         }

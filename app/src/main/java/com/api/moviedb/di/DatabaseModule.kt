@@ -1,9 +1,10 @@
 package com.api.moviedb.di
 
 import android.content.Context
+import android.os.Debug
 import androidx.room.Room
-import com.api.moviedb.data.local.db.dao.MovieDetailsDao
 import com.api.moviedb.data.local.db.MovieDatabase
+import com.api.moviedb.data.local.db.dao.MovieDetailsDao
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -14,7 +15,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module()
 @InstallIn(SingletonComponent::class)
-class DatabaseModule {
+object DatabaseModule {
 
     @Provides
     fun provideGson(): Gson {
@@ -23,14 +24,17 @@ class DatabaseModule {
 
     @Provides
     fun provideAppDatabase(@ApplicationContext appContext: Context, gson: Gson): MovieDatabase {
-        return Room.databaseBuilder(
+        val builder = Room.databaseBuilder(
             appContext,
             MovieDatabase::class.java,
-            "MyDatabase"
-        )
-            .build().apply {
-                MovieDatabase.gson = gson
-            }
+            "MyDatabase.db"
+        ).fallbackToDestructiveMigration()
+        if (Debug.isDebuggerConnected()) {
+            builder.allowMainThreadQueries()
+        }
+        return builder.build().apply {
+            MovieDatabase.gson = gson
+        }
     }
 
     @Provides

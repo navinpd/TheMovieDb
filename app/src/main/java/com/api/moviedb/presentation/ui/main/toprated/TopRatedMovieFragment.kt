@@ -47,15 +47,14 @@ class TopRatedMovieFragment : Fragment(), INextPage {
 
         val nowPlayingRV: RecyclerView = binding.topRatedRv
 
-        val adapter = MovieListAdapter(topRatedMovieList, glide)
+        val adapter = MovieListAdapter(glide)
+        adapter.submitList(topRatedMovieList)
         adapter.requestForNextItem = this
         nowPlayingRV.adapter = adapter
         nowPlayingRV.layoutManager = LinearLayoutManager(activity)
 
         viewModel.topRatedMovieData.observe(viewLifecycleOwner) {
-            val size = topRatedMovieList.size
-            topRatedMovieList.addAll(it.results)
-            adapter.notifyItemRangeChanged(size, size + it.results.size)
+            adapter.submitList(it)
         }
 
         viewModel.loadingState.observe(viewLifecycleOwner) {

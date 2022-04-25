@@ -7,6 +7,9 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -23,6 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -93,6 +97,27 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    fun FragmentManager.replace(containerId: Int, fragment: Fragment, tag: String) {
+        var current = findFragmentByTag(tag)
+        beginTransaction()
+            .apply {
+                //Hide the current fragment
+                primaryNavigationFragment?.let { hide(it) }
+
+                //Check if current fragment exists in fragmentManager
+                if (current == null) {
+                    current = fragment
+                    add(containerId, current!!, tag)
+                } else {
+                    show(current!!)
+                }
+            }
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+            .setPrimaryNavigationFragment(current)
+            .setReorderingAllowed(true)
+            .commitNowAllowingStateLoss()
     }
 
     private fun processGenre(it: GeneresResponse) {

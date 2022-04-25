@@ -45,15 +45,14 @@ class UpcomingMovieFragment : Fragment(), INextPage {
 
         val nowPlayingRV: RecyclerView = binding.upcomingRv
 
-        val adapter = MovieListAdapter(nowPlayingList, glide)
+        val adapter = MovieListAdapter(glide)
+        adapter.submitList(nowPlayingList)
         adapter.requestForNextItem = this
         nowPlayingRV.adapter = adapter
         nowPlayingRV.layoutManager = LinearLayoutManager(activity)
 
         viewModel.upcomingMoviesMovieData.observe(viewLifecycleOwner) {
-            val size = nowPlayingList.size
-            nowPlayingList.addAll(it.results)
-            adapter.notifyItemRangeChanged(size, size + it.results.size)
+            adapter.submitList(it)
         }
 
         viewModel.loadingState.observe(viewLifecycleOwner) {

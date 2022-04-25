@@ -41,7 +41,8 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
         setContentView(binding.root)
 
         val favList = mutableListOf<MovieDetail>()
-        val adapter = FavMovieAdapter(favList, glide)
+        val adapter = FavMovieAdapter(glide)
+        adapter.submitList(favList)
         adapter.requestForNextItem = this
 
         binding.titleTv.text = getString(R.string.favourite_movies)
@@ -53,9 +54,7 @@ class FavMovieListActivity : AppCompatActivity(), INextPage {
         viewModel.movieListLD.observe(this) {
             if (it.size != currentDataSize) {
                 if (it.size > 0) {
-                    favList.clear()
-                    favList.addAll(it)
-                    adapter.notifyDataSetChanged()
+                    adapter.submitList(it)
                     binding.likedMoviesRv.visibility = View.VISIBLE
                     binding.noSearchResult.visibility = View.GONE
                 } else {

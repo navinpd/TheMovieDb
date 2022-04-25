@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
 import com.api.moviedb.data.remote.model.nowplaying.NowPlayingMovies
+import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.domain.model.PageNumberData
 import com.api.moviedb.domain.usecase.MainUseCase
 import com.api.moviedb.presentation.ui.viewmodel.BaseViewModel
@@ -18,11 +19,15 @@ import javax.inject.Inject
 class NowPlayingViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
-    var currentPage = 0
-    var totalPage = 1
+    var position: Int = 0
 
-    private val nowPlayingMovieLiveData = MutableLiveData<NowPlayingMovies>()
-    val nowPlayingMoviesMovieData: LiveData<NowPlayingMovies>
+    private var currentPage = 0
+    private var totalPage = 1
+
+    private var nowPlayingList = arrayListOf<Results>()
+
+    private val nowPlayingMovieLiveData = MutableLiveData<ArrayList<Results>>()
+    val nowPlayingMoviesMovieData: LiveData<ArrayList<Results>>
         get() = nowPlayingMovieLiveData
 
     private val loadingMutableState = MutableLiveData<ViewMovieState>()
@@ -58,7 +63,8 @@ class NowPlayingViewModel @Inject constructor(
 
     private fun nowPlayingMovieRetrieved(nowPlayingMovies: NowPlayingMovies) {
         if (currentPage != nowPlayingMovies.page) {
-            nowPlayingMovieLiveData.value = nowPlayingMovies
+            nowPlayingList = ArrayList(nowPlayingList + nowPlayingMovies.results)
+            nowPlayingMovieLiveData.value = nowPlayingList
             currentPage = nowPlayingMovies.page!!
             totalPage = nowPlayingMovies.totalPages!!
         }

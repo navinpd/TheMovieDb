@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.api.common.toCommaSeparate
+import com.api.common.toCommaSeparator
 import com.api.common.toDateFormat
 import com.api.moviedb.R
 import com.api.moviedb.data.remote.model.movieDetails.Genres
@@ -14,6 +14,9 @@ import com.api.moviedb.data.remote.model.movieDetails.MovieDetail
 import com.api.moviedb.data.remote.model.movieDetails.SpokenLanguages
 import com.api.moviedb.databinding.ActivityMovieDetailBinding
 import com.api.moviedb.presentation.ui.viewmodel.ViewMovieState
+import com.api.moviedb.util.ConstData
+import com.api.moviedb.util.ConstData.Companion.getGenre
+import com.api.moviedb.util.ConstData.Companion.spokenLanguage
 import com.api.moviedb.util.FAV_MOVIE_INTENT_EXTRA
 import com.api.moviedb.util.IMAGE_PATH_PREFIX
 import com.api.moviedb.util.MOVIE_ID_INTENT_EXTRA
@@ -48,7 +51,6 @@ class MovieDetailActivity : AppCompatActivity() {
 
         Log.d("TAG", "MovieId is $movieId")
 
-        val options = RequestOptions().centerInside()
         viewModel.movieDetailState.observe(this) {
             val imagePath = IMAGE_PATH_PREFIX + (it.backdropPath ?: it.posterPath)
 
@@ -58,21 +60,17 @@ class MovieDetailActivity : AppCompatActivity() {
                 tagLineTv.text = getString(R.string.tagline_text, it.tagline)
                 titleTv.text = it.title
                 ratingBar.rating = (it.voteAverage!!.div(2)).toFloat()
-                voteCountTv.text = it.voteCount.toCommaSeparate()
+                voteCountTv.text = it.voteCount.toCommaSeparator()
                 statusTv.text = getString(R.string.release_text, it.status)
-                genreTv.text = getGenre(it.genres)
+                genreTv.text = getGenre(genres = it.genres, context = this@MovieDetailActivity)
 
-                glide.load(imagePath)
-                    .error(R.drawable.ic_baseline_error_24)
-                    .apply(options)
-                    .placeholder(R.drawable.ic_baseline_downloading_24)
-                    .into(backdropIv)
+                ConstData.loadImageToHolder(glide = glide, imagePath = imagePath, movieImage = backdropIv)
 
-                spokenLanguageTv.text = spokenLanguage(it.spokenLanguages)
-            }
+                spokenLanguageTv.text = spokenLanguage(it = it.spokenLanguages, context = this@MovieDetailActivity)
 
-            binding.markFavIv.setOnClickListener { _ ->
-                processDbOperation(it)
+                markFavIv.setOnClickListener { _ ->
+                    processDbOperation(it)
+                }
             }
 
             updateLocalMovieState()
@@ -98,32 +96,6 @@ class MovieDetailActivity : AppCompatActivity() {
         }
 
         invokeMovieDetails()
-    }
-
-    private fun getGenre(genres: ArrayList<Genres>): String {
-        var genre = ""
-        genres.forEach { gen ->
-            genre = if (genre.isEmpty()) gen.name!! else genre + ", " + gen.name
-        }
-
-        if (genre.isEmpty()) getString(R.string.genre_hyphen) else getString(
-            R.string.genre_data,
-            genre
-        )
-        return genre
-    }
-
-    private fun spokenLanguage(it: ArrayList<SpokenLanguages>): String {
-        var lang = ""
-        it.forEach { language ->
-            lang =
-                if (lang.isEmpty()) language.englishName!! else "$lang, ${language.englishName}"
-        }
-        if (lang.isEmpty()) getString(R.string.language_hyphen) else getString(
-            R.string.language_data,
-            lang
-        )
-        return lang
     }
 
     private fun processDbOperation(it: MovieDetail) {

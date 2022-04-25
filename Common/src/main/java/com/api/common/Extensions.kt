@@ -19,7 +19,7 @@ fun Disposable.disposedBy(compositeDisposable: CompositeDisposable): Disposable 
 /**
  * Int number to comma separated string
  */
-fun Int?.toCommaSeparate(): String {
+fun Int?.toCommaSeparator(): String {
     if (this == null)
         return ""
     val formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat

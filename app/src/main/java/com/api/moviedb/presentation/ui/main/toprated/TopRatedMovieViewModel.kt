@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
+import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.data.remote.model.toprated.TopRatedMovies
 import com.api.moviedb.domain.model.PageNumberData
 import com.api.moviedb.domain.usecase.MainUseCase
@@ -19,11 +20,13 @@ class TopRatedMovieViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
 
-    var currentPage = 0
-    var totalPage = 1
+    private var currentPage = 0
+    private var totalPage = 1
 
-    private val topRatedMovieLiveData = MutableLiveData<TopRatedMovies>()
-    val topRatedMovieData: LiveData<TopRatedMovies>
+    private var topRatedList = arrayListOf<Results>()
+
+    private val topRatedMovieLiveData = MutableLiveData<ArrayList<Results>>()
+    val topRatedMovieData: LiveData<ArrayList<Results>>
         get() = topRatedMovieLiveData
 
     private val loadingMutableState = MutableLiveData<ViewMovieState>()
@@ -59,7 +62,8 @@ class TopRatedMovieViewModel @Inject constructor(
 
     private fun onTopRatedMovieRetrieved(topMovies: TopRatedMovies) {
         if (currentPage != topMovies.page) {
-            topRatedMovieLiveData.value = topMovies
+            topRatedList = ArrayList(topRatedList + topMovies.results)
+            topRatedMovieLiveData.value = topRatedList
             currentPage = topMovies.page!!
             totalPage = topMovies.totalPages!!
         }

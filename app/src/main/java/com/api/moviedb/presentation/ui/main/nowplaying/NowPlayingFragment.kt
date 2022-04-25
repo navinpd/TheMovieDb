@@ -2,6 +2,7 @@ package com.api.moviedb.presentation.ui.main.nowplaying
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.api.moviedb.R
-import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.databinding.FragmentHomeBinding
 import com.api.moviedb.presentation.ui.moviedetail.MovieDetailActivity
 import com.api.moviedb.presentation.ui.viewmodel.ViewMovieState
@@ -28,7 +28,6 @@ class NowPlayingFragment : Fragment(), INextPage {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val nowPlayingList = mutableListOf<Results>()
     private val viewModel by viewModels<NowPlayingViewModel> {
         defaultViewModelProviderFactory
     }
@@ -42,16 +41,27 @@ class NowPlayingFragment : Fragment(), INextPage {
         val root: View = binding.root
 
         val nowPlayingRV = binding.nowPlayingRv
-        val nowPlayingAdapter = MovieListAdapter(nowPlayingList, glide)
+        val nowPlayingAdapter = MovieListAdapter(glide)
+        nowPlayingAdapter.submitList(emptyList())
 
         nowPlayingAdapter.requestForNextItem = this
         nowPlayingRV.adapter = nowPlayingAdapter
         nowPlayingRV.layoutManager = LinearLayoutManager(activity)
 
+        var isOnCreate = true
+
         viewModel.nowPlayingMoviesMovieData.observe(viewLifecycleOwner) {
-            val size = nowPlayingList.size
-            nowPlayingList.addAll(it.results)
-            nowPlayingAdapter.notifyItemRangeChanged(size, size + it.results.size)
+            nowPlayingAdapter.submitList(it)
+            val pos = viewModel.position
+            Log.d("TAG", "viewModel.position $pos")
+
+            if(pos > 0 && isOnCreate) {
+                Log.d("TAG", "Under isOnCreate $pos")
+                isOnCreate = !isOnCreate
+                (nowPlayingRV.layoutManager as LinearLayoutManager)
+                    .smoothScrollToPosition(nowPlayingRV, null, pos)
+                viewModel.position = 0
+            }
         }
 
         viewModel.loadingState.observe(viewLifecycleOwner) {
@@ -73,14 +83,13 @@ class NowPlayingFragment : Fragment(), INextPage {
             }
         }
 
+//        viewModel.getNowPlayingMovies(1)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (nowPlayingList.size == 0) {
-            viewModel.getNowPlayingMovies(1)
-        }
+        viewModel.getNowPlayingMovies(1)
     }
 
     override fun loadNextPage() {
@@ -95,6 +104,7 @@ class NowPlayingFragment : Fragment(), INextPage {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.e("TAG", "the view is destroyed")
         _binding = null
     }
 }

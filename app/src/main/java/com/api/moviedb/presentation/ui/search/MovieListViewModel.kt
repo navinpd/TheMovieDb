@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.api.common.disposedBy
+import com.api.moviedb.data.remote.model.nowplaying.Results
 import com.api.moviedb.data.remote.model.searchmovie.SearchResultMovies
 import com.api.moviedb.domain.model.SearchMovieData
 import com.api.moviedb.domain.usecase.MainUseCase
@@ -19,12 +20,14 @@ class MovieListViewModel @Inject constructor(
     private val mainUseCase: MainUseCase
 ) : BaseViewModel() {
 
-    var currentPage = 0
-    var totalPage = 1
+    private var currentPage = 0
+    private var totalPage = 1
 
-    private val searchMovieMLD = MutableLiveData<SearchResultMovies>()
-    val searchMovieData: LiveData<SearchResultMovies>
+    private val searchMovieMLD = MutableLiveData<ArrayList<Results>>()
+    val searchMovieData: LiveData<ArrayList<Results>>
         get() = searchMovieMLD
+
+    private var searchedMovies = arrayListOf<Results>()
 
     private val loadingMutableState = MutableLiveData<ViewMovieState>()
     val loadingState: LiveData<ViewMovieState>
@@ -58,9 +61,10 @@ class MovieListViewModel @Inject constructor(
     }
 
     private fun onMovieSearchRetrieved(searchMovies: SearchResultMovies) {
-        searchMovieMLD.value = searchMovies
+
         if (currentPage != searchMovies.page) {
-            searchMovieMLD.value = searchMovies
+            searchedMovies = ArrayList(searchedMovies + searchMovies.results)
+            searchMovieMLD.value = searchedMovies
             currentPage = searchMovies.page!!
             totalPage = searchMovies.totalPages!!
         }
@@ -68,6 +72,6 @@ class MovieListViewModel @Inject constructor(
 
     private fun onMovieFetchFailed(throwable: Throwable) {
         Log.e("TAG", throwable.message ?: "")
-        loadingMutableState.value = ViewMovieState.ShowError(throwable.message?:"")
+        loadingMutableState.value = ViewMovieState.ShowError(throwable.message ?: "")
     }
 }

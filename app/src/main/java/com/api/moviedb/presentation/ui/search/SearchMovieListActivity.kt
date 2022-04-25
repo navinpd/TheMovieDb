@@ -41,24 +41,22 @@ class SearchMovieListActivity : AppCompatActivity(), INextPage {
 
         val searchRv = binding.nowPlayingRv
         val searchResult = mutableListOf<Results>()
-        val adapter = MovieListAdapter(searchResult, glide)
+        val adapter = MovieListAdapter(glide)
+        adapter.submitList(searchResult)
         adapter.requestForNextItem = this
         searchRv.adapter = adapter
         searchRv.layoutManager = LinearLayoutManager(this)
 
         binding.titleTv.text = getString(R.string.search_movie_result)
         viewModel.searchMovieData.observe(this) {
-            val size = it.results.size
-            Log.d("TAG", "Data size is $size")
-            if (size == 0) {
+            if (it.size == 0) {
                 binding.noSearchResult.visibility = View.VISIBLE
                 binding.noSearchResult.text = getString(R.string.no_data_found)
                 binding.nowPlayingRv.visibility = View.GONE
             } else {
                 binding.noSearchResult.visibility = View.GONE
                 binding.nowPlayingRv.visibility = View.VISIBLE
-                searchResult.addAll(it.results)
-                adapter.notifyItemRangeChanged(size, size + it.results.size)
+                adapter.submitList(it)
             }
         }
 
