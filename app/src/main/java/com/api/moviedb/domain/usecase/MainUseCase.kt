@@ -13,5 +13,6 @@ class MainUseCase @Inject constructor(
     val favMovieDeleteUseCase : FavMovieDeleteUseCase,
     val favMoviesListGetUseCase :FavMoviesGetUseCase,
     val favMovieGetUseCase :FavMovieGetUseCase,
-    val favMovieStoreUseCase: FavMovieStoreUseCase
+    val favMovieStoreUseCase: FavMovieStoreUseCase,
+    val favMovieExistsUseCase: FavMovieExistsUseCase
 )

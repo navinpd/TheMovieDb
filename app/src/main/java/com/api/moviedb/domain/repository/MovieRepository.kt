@@ -46,4 +46,6 @@ interface MovieRepository {
     fun deleteFavMovie(movieId: Int) : Completable
 
     fun getFavMovie(movieId: Int) : Observable<MovieDetail>
+
+    fun isIdExists(movieId: Int) : Observable<Boolean>
 }

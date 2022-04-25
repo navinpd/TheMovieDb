@@ -28,6 +28,10 @@ class MovieDetailViewModel @Inject constructor(
     val loadingState: LiveData<ViewMovieState>
         get() = loadingMutableState
 
+    private val isMovieStoredMutableState = MutableLiveData<Boolean>()
+    val localMovieStoredState: LiveData<Boolean>
+        get() = isMovieStoredMutableState
+
     fun getMovieDetails(movieId: Int) {
         mainUseCase.movieDetailUseCase
             .run(MovieIdData(movieId))
@@ -37,6 +41,19 @@ class MovieDetailViewModel @Inject constructor(
             .doAfterTerminate { hideLoading() }
             .subscribe(
                 { onMovieDetailRetrieved(it) },
+                { onMovieFetchFailed(it) }
+            ).disposedBy(compositeDisposable)
+    }
+
+    fun isFavMovieStored(movieId: Int?) {
+        mainUseCase.favMovieExistsUseCase
+            .run(movieId)
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe { showLoading() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doAfterTerminate { hideLoading() }
+            .subscribe(
+                { favMovieStored(it) },
                 { onMovieFetchFailed(it) }
             ).disposedBy(compositeDisposable)
     }
@@ -89,6 +106,10 @@ class MovieDetailViewModel @Inject constructor(
 
     private fun onMovieDetailRetrieved(movieDetail: MovieDetail) {
         movieDetailData.value = movieDetail
+    }
+
+    private fun favMovieStored(isStored : Boolean) {
+        isMovieStoredMutableState.value = isStored
     }
 
     private fun onMovieFetchFailed(throwable: Throwable) {

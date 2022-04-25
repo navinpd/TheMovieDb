@@ -71,6 +71,8 @@ class MovieDetailActivity : AppCompatActivity() {
                 markFavIv.setOnClickListener { _ ->
                     processDbOperation(it)
                 }
+
+                viewModel.isFavMovieStored(it.id)
             }
 
             updateLocalMovieState()
@@ -92,6 +94,14 @@ class MovieDetailActivity : AppCompatActivity() {
                     binding.errorMessage.visibility = View.GONE
                     binding.progressBar.visibility = View.VISIBLE
                 }
+            }
+        }
+
+        viewModel.localMovieStoredState.observe(this) {
+            if(it) {
+                binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_white_24)
+            } else {
+                binding.markFavIv.setBackgroundResource(R.drawable.ic_baseline_bookmark_color_24)
             }
         }
 

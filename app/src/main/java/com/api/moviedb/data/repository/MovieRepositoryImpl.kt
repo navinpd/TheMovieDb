@@ -84,4 +84,8 @@ class MovieRepositoryImpl @Inject constructor(
             )
         )
     }
+
+    override fun isIdExists(movieId: Int): Observable<Boolean> {
+        return dbApi.isIdExists(movieId)
+    }
 }

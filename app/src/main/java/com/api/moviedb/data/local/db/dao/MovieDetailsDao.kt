@@ -21,4 +21,7 @@ interface MovieDetailsDao {
 
     @Query("SELECT * FROM Movie_Detail WHERE id = :id")
     fun getFavMovie(id: Int): Observable<MovieDetailEntity>
+
+    @Query("SELECT EXISTS (SELECT 1 FROM Movie_Detail WHERE id = :id)")
+    fun isIdExists(id: Int) : Observable<Boolean>
 }
